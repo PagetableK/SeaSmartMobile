@@ -1,5 +1,6 @@
 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Constantes from '../utils/Constantes'
@@ -7,7 +8,7 @@ import Constants from 'expo-constants';
 //Import de componentes
 import Input from '../components/Inputs/Input'
 import InputMultiline from '../components/Inputs/InputMultiline'
-import Buttons from '../components/Buttons/Button';
+import Buttons from '../components/Buttons/Buttons';
 import MaskedInputTelefono from '../components/Inputs/MaskedInputTelefono';
 import MaskedInputDui from '../components/Inputs/MaskedInputDui';
 import InputEmail from '../components/Inputs/InputEmail';
@@ -76,7 +77,7 @@ export default function Registro({ navigation }) {
                     const data = await response.json();
         
                     if (data.status) {
-                        navigation.navigate('Sesion');
+                        navigation.navigate('Login');
                     } else {
                         console.log(data);
                         // Alert the user about the error
@@ -86,7 +87,7 @@ export default function Registro({ navigation }) {
                     console.error(error, "Error desde Catch");
                     Alert.alert('Error', 'Ocurrió un error al iniciar sesión con bryancito');
                 } */
-        navigation.navigate('Sesion');
+        navigation.navigate('Login');
     };
 
     //props que recibe input
@@ -134,7 +135,7 @@ export default function Registro({ navigation }) {
             const data = await response.json();
             if (data.status) {
                 Alert.alert('Datos Guardados correctamente');
-                navigation.navigate('Sesion');
+                navigation.navigate('Login');
             } else {
                 Alert.alert('Error', data.error);
             }
@@ -223,7 +224,7 @@ return (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#EAD8C0',
+        backgroundColor: '#F7F5F4',
         paddingTop: Constants.statusBarHeight + 5, // el 5 es para darle un pequeño margen cuando hay una camara en el centro de la pantalla
       },
     scrollViewStyle: {

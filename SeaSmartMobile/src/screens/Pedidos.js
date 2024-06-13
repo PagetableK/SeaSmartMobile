@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import Buttons from '../components/Buttons/Buttons';
 import * as Constantes from '../utils/Constantes';
 
-export default function Inicio({ navigation }) {
+export default function Pedidos({ navigation }) {
   const [nombre, setNombre] = useState(null);
   const ip = Constantes.IP;
 

@@ -1,28 +1,29 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import Input from '../components/Inputs/Input'
-import Buttons from '../components/Buttons/Button';
+import Buttons from '../components/Buttons/Buttons';
 import * as Constantes from '../utils/Constantes'
 
 export default function Login({ navigation }) {
-  const ip = Constantes.IP;
+  const ip = Constantes.IP; 
 
   const [isContra, setIsContra] = useState(true)
   const [usuario, setUsuario] = useState('')
   const [contra, setContra] = useState('')
 
   const validarSesion = async () => {
+    console.log('a');
     try {
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
         method: 'GET'
       });
-  
+
       const data = await response.json();
-  
+
       if (data.status === 1) {
         cerrarSesion();
-        console.log("Se eliminó la sesión")
       } else {
         console.log("No hay sesión activa")
         return
@@ -34,8 +35,9 @@ export default function Login({ navigation }) {
   }
 
   const cerrarSesion = async () => {
+    console.log('b');
     try {
-      const response = await fetch(`${ip}/coffeeshop/api/services/public/cliente.php?action=logOut`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
         method: 'GET'
       });
 
@@ -53,12 +55,13 @@ export default function Login({ navigation }) {
   }
 
   const handlerLogin = async () => {
+    console.log('c');
     try {
       const formData = new FormData();
       formData.append('correo', usuario);
       formData.append('clave', contra);
 
-      const response = await fetch(`${ip}/coffeeshop/api/services/public/cliente.php?action=logIn`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logIn`, {
         method: 'POST',
         body: formData
       });
@@ -83,35 +86,56 @@ export default function Login({ navigation }) {
     navigation.navigate('Registro');
   };
 
-  useEffect(() => { validarSesion() }, [])
+  useEffect(() => {
+    validarSesion()
+  }, [])
 
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>Iniciar Sesión</Text>
-      <Input
-        placeHolder='Usuario'
-        setValor={usuario}
-        setTextChange={setUsuario}
+      <Text style={styles.texto}>Inicia Sesión</Text>
+      <TextInput
+        style={styles.input}
+        label="Usuario"
+        value={usuario}
+        onChangeText={setUsuario}
+        keyboardType="email-address"
+        mode='outlined'
+        outlineColor='white'
+        theme={{
+          colors: {
+            primary: '#4593EE'
+          },
+        }}
       />
-      <Input
-        placeHolder='Contraseña'
-        setValor={contra}
-        setTextChange={setContra}
-        contra={isContra} />
-      <Buttons
-        textoBoton='Iniciar Sesión'
-        accionBoton={handlerLogin} />
+      <TextInput
+        style={styles.input}
+        label="Contraseña"
+        value={contra}
+        onChangeText={setContra}
+        secureTextEntry
+        mode='outlined'
+        outlineColor='white'
+        theme={{
+          colors: {
+            primary: '#4593EE'
+          },
+        }}
+      />
+      <Button mode="contained" onPress={handlerLogin} style={styles.button}>
+        <Text style={styles.textoBoton}>Iniciar Sesión</Text>
+      </Button>
       <TouchableOpacity onPress={irRegistrar}><Text style={styles.textRegistrar}>¿No tienes cuenta? Regístrate aquí</Text></TouchableOpacity>
-    </View>
+    </View> 
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EAD8C0',
+    backgroundColor: '#F7F5F4',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 20
   },
   texto: {
     color: '#322C2B', fontWeight: '900',
@@ -127,4 +151,16 @@ const styles = StyleSheet.create({
     height: 75,
     marginBottom: 10
   },
+  input: {
+    width: Dimensions.get('window').width / 1.2,
+    backgroundColor: '#FFFFFF',
+  },
+  button: {
+    width: Dimensions.get('window').width / 1.2,
+    backgroundColor: '#3E88DE',
+  },
+  textoBoton: {
+    fontSize: 15,
+    fontWeight: 'bold'
+  }
 });
