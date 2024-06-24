@@ -31,9 +31,9 @@ export default function Registro({ navigation }) {
     const [clave, setClave] = useState('')
     const [confirmarClave, setConfirmarClave] = useState('')
 
-     // Expresiones regulares para validar DUI y teléfono
-     const duiRegex = /^\d{8}-\d$/;
-     const telefonoRegex = /^\d{4}-\d{4}$/;
+    // Expresiones regulares para validar DUI y teléfono
+    const duiRegex = /^\d{8}-\d$/;
+    const telefonoRegex = /^\d{4}-\d{4}$/;
 
     /*
     Codigo para mostrar el datetimepicker
@@ -96,9 +96,9 @@ export default function Registro({ navigation }) {
     const handleCreate = async () => {
         try {
 
-    // Calcular la fecha mínima permitida (18 años atrás desde la fecha actual)
-      const fechaMinima = new Date();
-      fechaMinima.setFullYear(fechaMinima.getFullYear() - 18);
+            // Calcular la fecha mínima permitida (18 años atrás desde la fecha actual)
+            const fechaMinima = new Date();
+            fechaMinima.setFullYear(fechaMinima.getFullYear() - 18);
             // Validar los campos
             if (!nombre.trim() || !apellido.trim() || !email.trim() || !direccion.trim() ||
                 !dui.trim() || !fechaNacimiento.trim() || !telefono.trim() || !clave.trim() || !confirmarClave.trim()) {
@@ -111,9 +111,9 @@ export default function Registro({ navigation }) {
                 Alert.alert("El teléfono debe tener el formato correcto (####-####)");
                 return;
             } else if (date > fechaMinima) {
-        Alert.alert('Error', 'Debes tener al menos 18 años para registrarte.');
-        return;
-      }
+                Alert.alert('Error', 'Debes tener al menos 18 años para registrarte.');
+                return;
+            }
 
             // Si todos los campos son válidos, proceder con la creación del usuario
             const formData = new FormData();
@@ -145,7 +145,7 @@ export default function Registro({ navigation }) {
     };
 
 
-return (
+    return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
                 <Text style={styles.texto}>Registrar Usuario</Text>
@@ -178,15 +178,15 @@ return (
                     <Text style={styles.fecha}>Seleccion: {fechaNacimiento}</Text>
 
                     {show && (
-         <DateTimePicker
-         testID="dateTimePicker"
-         value={date}
-         mode={mode}
-         is24Hour={true}
-         minimumDate={new Date(new Date().getFullYear() - 100, new Date().getMonth(), new Date().getDate())} // Fecha mínima permitida (100 años atrás desde la fecha actual)
-         maximumDate={new Date()} // Fecha máxima permitida (fecha actual)
-         onChange={onChange}
-       />
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={mode}
+                            is24Hour={true}
+                            minimumDate={new Date(new Date().getFullYear() - 100, new Date().getMonth(), new Date().getDate())} // Fecha mínima permitida (100 años atrás desde la fecha actual)
+                            maximumDate={new Date()} // Fecha máxima permitida (fecha actual)
+                            onChange={onChange}
+                        />
                     )}
                 </View>
 
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F7F5F4',
         paddingTop: Constants.statusBarHeight + 5, // el 5 es para darle un pequeño margen cuando hay una camara en el centro de la pantalla
-      },
+    },
     scrollViewStyle: {
         alignItems: 'center',
         justifyContent: 'center'
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     },
     textRegistrar: {
         color: '#322C2B', fontWeight: '700',
-        fontSize: 18
+        fontSize: 15
     },
 
     fecha: {

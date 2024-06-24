@@ -1,16 +1,16 @@
 import { StyleSheet, TextInput } from 'react-native';
 
-export default function Input({placeHolder, setValor, contra, setTextChange}) {
+export default function Input({ placeHolder, setValor, contra, setTextChange }) {
 
   return (
 
     <TextInput
-    style={styles.Input}
-    placeholder={placeHolder}
-    value={setValor}
-    placeholderTextColor={'#FFF'}
-    secureTextEntry={contra} 
-    onChangeText={setTextChange}
+      style={styles.Input}
+      placeholder={placeHolder}
+      value={setValor}
+      placeholderTextColor={'#090A0A'}
+      secureTextEntry={contra}
+      onChangeText={setTextChange}
     />
 
   );
@@ -18,12 +18,12 @@ export default function Input({placeHolder, setValor, contra, setTextChange}) {
 
 const styles = StyleSheet.create({
   Input: {
-    backgroundColor:'#A79277',
-    color: "#fff", fontWeight:'800',
-    width:250,
-    borderRadius:5,
+    backgroundColor: '#FFF',
+    color: "#090A0A", fontWeight: '800',
+    width: 300,
+    borderRadius: 5,
     padding: 5,
-    marginVertical:10
+    marginVertical: 10
   },
 
 });
