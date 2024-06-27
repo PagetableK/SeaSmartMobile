@@ -124,6 +124,9 @@ export default function Login({ navigation }) {
       <Button mode="contained" onPress={handlerLogin} style={styles.button}>
         <Text style={styles.textoBoton}>Iniciar Sesión</Text>
       </Button>
+      <Button mode="contained" onPress={cerrarSesion} style={styles.button}>
+        <Text style={styles.textoBoton}>Cerrar Sesión</Text>
+      </Button>
       <TouchableOpacity onPress={irRegistrar}><Text style={styles.textRegistrar}>¿No tienes cuenta? Regístrate aquí</Text></TouchableOpacity>
     </View> 
   );
