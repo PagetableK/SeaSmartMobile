@@ -7,31 +7,6 @@ export default function Carrito({ navigation }) {
   const [nombre, setNombre] = useState(null);
   const ip = Constantes.IP;
 
-  const handleLogout = async () => {
-    console.log('a1');
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
-    }
-  };
-
-  const irActualizar = () => {
-    navigation.navigate('Productos');
-  };
-
-  const EditUser = () => {
-    navigation.navigate('UpdateUser');
-  };
-
   const getUser = async () => {
     console.log('b1');
     try {
@@ -55,19 +30,11 @@ export default function Carrito({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <Image
-        source={require('../../assets/coffee-cup-splash.png')}
-        style={styles.image}
-      /> */}
       <Text style={styles.title}>Bienvenid@</Text>
       <Text style={styles.subtitle}>
         { /*correo ? correo : 'No hay correo para mostrar'*/}
         {nombre ? nombre : 'No hay Nombre para mostrar'}
       </Text>
-      <Buttons
-        textoBoton='Cerrar Sesión'
-        accionBoton={handleLogout}
-      />
     </View>
   );
 }
