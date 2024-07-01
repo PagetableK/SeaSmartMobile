@@ -1,18 +1,29 @@
+// MaskedInputTelefono.js
 import { StyleSheet } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 
-export default function MaskedInputTelefono({ telefono, setTelefono }) {
+export default function MaskedInputTelefono({ telefono, setTelefono, placeholder }) {
+    const handleTelefonoChange = (text) => {
+        if (placeholder === "Teléfono fijo" && text.length === 1 && text !== '2') {
+            return;
+        }
+        if (placeholder === "Teléfono móvil" && text.length === 1 && text !== '7') {
+            return;
+        }
+        setTelefono(text);
+    };
+
     return (
         <TextInputMask
             style={styles.Input}
-            placeholder="Teléfono"
+            placeholder={placeholder}
             placeholderTextColor="#090A0A"
             type={'custom'}
             options={{
                 mask: '9999-9999' // Formato para el número de teléfono
             }}
             value={telefono}
-            onChangeText={setTelefono}
+            onChangeText={handleTelefonoChange}
         />
     );
 }
@@ -27,5 +38,4 @@ const styles = StyleSheet.create({
         padding: 5,
         marginVertical: 10
     },
-
 });

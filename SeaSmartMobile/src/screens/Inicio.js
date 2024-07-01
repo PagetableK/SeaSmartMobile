@@ -8,18 +8,34 @@ export default function Inicio({ navigation }) {
   const ip = Constantes.IP;
 
   const handleLogout = async () => {
-    console.log('a1');
+    console.log('Intentando cerrar sesión...');
     try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
         method: 'GET'
       });
       const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
+  
+      if (data.session === 1) {
+        // Hay una sesión activa, procede a cerrarla
+        const logoutResponse = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
+          method: 'GET'
+        });
+        const logoutData = await logoutResponse.json();
+  
+        if (logoutData.status === 1) {
+          // Sesión cerrada correctamente, redirigir a Login
+          navigation.navigate('Login');
+        } else {
+          // Problema al cerrar sesión, mostrar mensaje de error
+          Alert.alert('Error', logoutData.error || 'Error desconocido al cerrar sesión');
+        }
       } else {
-        Alert.alert('Error', data.error);
+        // No hay una sesión activa, mostrar mensaje
+        Alert.alert('Sesión no activa', 'No hay una sesión activa para cerrar');
+        navigation.navigate('Login'); // Redirige a Login por precaución
       }
     } catch (error) {
+      console.error('Error al cerrar sesión:', error);
       Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
     }
   };
