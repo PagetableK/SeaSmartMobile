@@ -13,26 +13,26 @@ export default function Login({ navigation }) {
   const [usuario, setUsuario] = useState('')
   const [contra, setContra] = useState('')
 
-  const validarSesion = async () => {
-    console.log('a');
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
-        method: 'GET'
-      });
+  // const validarSesion = async () => {
+  //   console.log('a');
+  //   try {
+  //     const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
+  //       method: 'GET'
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (data.status === 1) {
-        cerrarSesion();
-      } else {
-        console.log("No hay sesión activa")
-        return
-      }
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Ocurrió un error al validar la sesión');
-    }
-  }
+  //     if (data.status === 1) {
+  //       cerrarSesion();
+  //     } else {
+  //       console.log("No hay sesión activa")
+  //       return
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     Alert.alert('Error', 'Ocurrió un error al validar la sesión');
+  //   }
+  // }
 
   const cerrarSesion = async () => {
     console.log('b');
@@ -61,7 +61,7 @@ export default function Login({ navigation }) {
       formData.append('correo', usuario);
       formData.append('clave', contra);
 
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logIn`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
         method: 'POST',
         body: formData
       });
@@ -87,7 +87,7 @@ export default function Login({ navigation }) {
   };
 
   useEffect(() => {
-    validarSesion()
+    // validarSesion()
   }, [])
 
   return (

@@ -1,40 +1,121 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image, FlatList, Dimensions } from 'react-native';
 import Buttons from '../components/Buttons/Buttons';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Constantes from '../utils/Constantes';
+import ModalEditarCantidad from '../components/Modales/ModalEditarCantidad';
+import CarritoCard from '../components/CarritoCard/CarritoCard';
 
 export default function Carrito({ navigation }) {
-  const [nombre, setNombre] = useState(null);
+
+  const [dataDetalleCarrito, setDataDetalleCarrito] = useState([]);
+  const [cantidad, setCantidad] = useState(null);
+  const [idDetalle, setIdDetalle] = useState(null);
+  const [cantidadProductoCarrito, setCantidadProductoCarrito] = useState(0);
+  const [totalCarrito, setTotalCarrito] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const ip = Constantes.IP;
 
-  const getUser = async () => {
-    console.log('b1');
+  useFocusEffect(
+    React.useCallback(() => {
+      getDetalleCarrito(); // Llama a la función getDetalleCarrito.
+    }, [])
+  );
+
+  // Función para obtener los detalles del carrito desde el servidor
+  const getDetalleCarrito = async () => {
     try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
-        method: 'GET'
+
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/detalles_pedidos.php?action=readCart`, {
+        method: 'GET',
       });
+
       const data = await response.json();
+
+      console.log(data, "Data desde getDetalleCarrito")
+
       if (data.status) {
-        setNombre(data.username);
+        setDataDetalleCarrito(data.dataset);
       } else {
-        Alert.alert('Error', data.error);
+        console.log("No hay detalles del carrito disponibles")
       }
     } catch (error) {
-      Alert.alert('Error', toString(error));
+      console.error(error, "Error desde Catch");
+      Alert.alert('Error', 'Ocurrió un error al cargar los productos del carrito');
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // Función para finalizar el pedido
+  const finalizarPedido = async () => {
+
+  };
+
+  // Función para manejar la modificación de un detalle del carrito
+  const handleEditarDetalle = (idDetalle, cantidadDetalle) => {
+    setModalVisible(true);
+    setIdDetalle(idDetalle);
+    setCantidadProductoCarrito(cantidadDetalle);
+  };
+
+  const renderItem = ({ item }) => (
+    <CarritoCard
+      item={item}
+      cargarCategorias={getDetalleCarrito}
+      modalVisible={modalVisible}
+      setModalVisible={setModalVisible}
+      setCantidadProductoCarrito={setCantidadProductoCarrito}
+      cantidadProductoCarrito={cantidadProductoCarrito}
+      idDetalle={idDetalle}
+      setIdDetalle={setIdDetalle}
+      accionBotonDetalle={handleEditarDetalle}
+      getDetalleCarrito={getDetalleCarrito}
+      updateDataDetalleCarrito={setDataDetalleCarrito} // Nueva prop para actualizar la lista
+    />
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bienvenid@</Text>
-      <Text style={styles.subtitle}>
-        { /*correo ? correo : 'No hay correo para mostrar'*/}
-        {nombre ? nombre : 'No hay Nombre para mostrar'}
-      </Text>
+      <ModalEditarCantidad
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+        idDetalle={idDetalle}
+        setIdDetalle={setIdDetalle}
+        setCantidadProductoCarrito={setCantidadProductoCarrito}
+        cantidadProductoCarrito={cantidadProductoCarrito}
+        getDetalleCarrito={getDetalleCarrito}
+      />
+
+      {/* Título de la pantalla */}
+      <Text style={styles.title}>Carrito de compra</Text>
+
+      <View
+        style={{
+          borderBottomColor: 'black',
+          borderBottomWidth: 2,
+          width: Dimensions.get('window').width / 1.1,
+        }}
+      />
+      {/* Lista de detalles del carrito */}
+      {dataDetalleCarrito.length > 0 ? (
+        <FlatList
+          data={dataDetalleCarrito}
+          renderItem={renderItem}
+          style={{ width: Dimensions.get('window').width / 1.1, flex: 2 }}
+          keyExtractor={(item) => item.id_detalle_producto.toString()}
+        />
+      ) : (
+        <Text style={styles.titleDetalle}>No hay detalles del carrito disponibles.</Text>
+      )}
+
+      {/* Botones de finalizar pedido y regresar a productos */}
+      <View>
+        {dataDetalleCarrito.length > 0 && (
+          <Buttons
+            textoBoton='Finalizar Pedido'
+            accionBoton={finalizarPedido}
+          />
+        )}
+      </View>
     </View>
   );
 }
@@ -42,9 +123,9 @@ export default function Carrito({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F5F4',
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    flexDirection: 'column'
   },
   image: {
     width: 100,
@@ -65,9 +146,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 5,
-    color: '#5C3D2E', // Brown color for the title
+    textAlign: 'left',
+    width: Dimensions.get('window').width,
+    marginLeft: Dimensions.get('window').width / 10,
+    marginTop: Dimensions.get('window').height / 30,
+    flex: 0.1,
+    color: '#000', // Brown color for the title
   },
   subtitle: {
     fontSize: 20,
