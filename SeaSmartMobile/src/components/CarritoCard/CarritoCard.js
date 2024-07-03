@@ -50,6 +50,7 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
 
             <Text style={styles.itemText}>ID: {item.id_detalle_producto}</Text>
             <Text style={styles.itemText}>Nombre: {item.nombre_producto}</Text>
+            <Image source={require(`${ip}/SeaSmart/api/images/detalles_productos/${item}`)}/>
             {item.talla != null ? (
                 <Text></Text>
             ):(null)}

@@ -104,7 +104,10 @@ export default function Carrito({ navigation }) {
           keyExtractor={(item) => item.id_detalle_producto.toString()}
         />
       ) : (
-        <Text style={styles.titleDetalle}>No hay detalles del carrito disponibles.</Text>
+        <View style={{display: 'flex', alignItems: 'center', gap: 100}}>
+          <Text style={styles.titleDetalle}>No se han agregado productos al carrito.</Text>
+          <Image source={require('../../assets/carro.png')} style={{width: 200, height: 200}}/>
+        </View>
       )}
 
       {/* Botones de finalizar pedido y regresar a productos */}
@@ -160,4 +163,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     color: '#5C3D2E', // Brown color for the title
   },
+  titleDetalle: {
+    marginTop: 20,
+    fontSize: 17,
+  }
 });
