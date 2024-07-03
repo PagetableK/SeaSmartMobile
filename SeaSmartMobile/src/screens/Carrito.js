@@ -60,15 +60,7 @@ export default function Carrito({ navigation }) {
   const renderItem = ({ item }) => (
     <CarritoCard
       item={item}
-      cargarCategorias={getDetalleCarrito}
-      modalVisible={modalVisible}
-      setModalVisible={setModalVisible}
-      setCantidadProductoCarrito={setCantidadProductoCarrito}
-      cantidadProductoCarrito={cantidadProductoCarrito}
-      idDetalle={idDetalle}
-      setIdDetalle={setIdDetalle}
       accionBotonDetalle={handleEditarDetalle}
-      getDetalleCarrito={getDetalleCarrito}
       updateDataDetalleCarrito={setDataDetalleCarrito} // Nueva prop para actualizar la lista
     />
   );

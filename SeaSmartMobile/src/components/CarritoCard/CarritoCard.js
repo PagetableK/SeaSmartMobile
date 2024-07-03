@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TouchableOpacity, View, StyleSheet, FlatList, Alert } from 'react-native';
+import { Text, TouchableOpacity, View, StyleSheet, FlatList, Image, Alert } from 'react-native';
 import Constants from 'expo-constants';
 import * as Constantes from '../../utils/Constantes'
 
@@ -47,28 +47,25 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
 
     return (
         <View style={styles.itemContainer}>
-
-            <Text style={styles.itemText}>ID: {item.id_detalle_producto}</Text>
-            <Text style={styles.itemText}>Nombre: {item.nombre_producto}</Text>
-            <Image source={require(`${ip}/SeaSmart/api/images/detalles_productos/${item}`)}/>
-            {item.talla != null ? (
-                <Text></Text>
-            ):(null)}
+            <TouchableOpacity style={{ borderColor: 'red', borderWidth: 2, borderRadius: 20, width: 35, height: 32, alignSelf: 'flex-end' }}
+                onPress={() => handleDeleteDetalleCarrito(item.id_detalle_producto)}
+            >
+                <Image source={require('../../../assets/menos.png')} style={{ height: 30, width: 30, }} />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 15 }}>{item.nombre_producto}</Text>
+            <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 200, height: 200, alignSelf: 'center' }} />
+            <Text style={styles.itemText}>Talla: {item.talla}</Text>
+            <Text style={styles.itemText}>Color: {item.color_producto}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 20 }}>
+                <Text style={styles.itemText}>Cantidad: {item.cantidad_producto}</Text>
+                <TouchableOpacity
+                    onPress={() => accionBotonDetalle(item.id_detalle, item.cantidad_producto)}
+                >
+                    <Image source={require('../../../assets/editar.png')} style={{ width: 35, height: 35 }} />
+                </TouchableOpacity>
+            </View>
             <Text style={styles.itemText}>Precio: ${item.precio_producto}</Text>
-            <Text style={styles.itemText}>Cantidad: {item.cantidad_producto}</Text>
             <Text style={styles.itemText}>SubTotal: ${(parseFloat(item.cantidad_producto) * parseFloat(item.precio_producto)).toFixed(2)}</Text>
-
-            <TouchableOpacity style={styles.modifyButton}
-                onPress={() => accionBotonDetalle(item.id_detalle, item.cantidad_producto)}
-            >
-                <Text style={styles.buttonText}>Modificar Cantidad</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.deleteButton}
-                onLongPress={() => handleDeleteDetalleCarrito(item.id_detalle_producto)}
-            >
-                <Text style={styles.buttonText}>Eliminar del carrito</Text>
-            </TouchableOpacity>
         </View>
 
     );
@@ -100,6 +97,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
+        gap: 3,
     },
     itemText: {
         fontSize: 16,
@@ -113,15 +111,6 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
         backgroundColor: '#8F6B58', // Light brown color for modify button
-        marginVertical: 4,
-    },
-    deleteButton: {
-        borderWidth: 1,
-        borderColor: '#D2691E',
-        borderRadius: 8,
-        paddingVertical: 8,
-        paddingHorizontal: 16,
-        backgroundColor: '#D2691E', // Darker orange color for delete button
         marginVertical: 4,
     },
     buttonText: {

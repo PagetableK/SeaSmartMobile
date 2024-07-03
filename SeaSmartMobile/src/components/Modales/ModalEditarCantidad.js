@@ -9,10 +9,6 @@ const ModalEditarCantidad = ({setModalVisible, modalVisible, idDetalle, setCanti
 
   const handleUpdateDetalleCarrito = async () => {
     try {
-      if (cantidadProductoCarrito <= 0) {
-        Alert.alert("La cantidad no puede ser igual o menor a 0");
-        return; // Corrige la lógica aquí
-      }
 
       const formData = new FormData();
       formData.append('idDetalle', idDetalle);
