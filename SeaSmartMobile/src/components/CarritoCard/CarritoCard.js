@@ -7,7 +7,7 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
 
     const ip = Constantes.IP;
 
-    const handleDeleteDetalleCarrito = async (idDetalle) => {
+    const handleDeleteDetalleCarrito = async (idDetalleProducto, idDetallePedido) => {
         try {
             // Mostrar un mensaje de confirmación antes de eliminar
             Alert.alert(
@@ -22,16 +22,18 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
                         text: 'Eliminar',
                         onPress: async () => {
                             const formData = new FormData();
-                            formData.append('idDetalleProducto', idDetalle);
-                            const response = await fetch(`${ip}/coffeeshop/api/services/public/pedido.php?action=deleteDetail`, {
+                            formData.append('idDetalleProducto', idDetalleProducto);
+                            formData.append('idDetallePedido', idDetallePedido);
+                            const response = await fetch(`${ip}/SeaSmart/api/services/public/detalles_pedidos.php?action=removeDetail`, {
                                 method: 'POST',
                                 body: formData
                             });
                             const data = await response.json();
+                            console.log(data);
                             if (data.status) {
-                                Alert.alert('Datos eliminados correctamente del carrito');
+                                Alert.alert('Producto eliminado correctamente del carrito');
                                 // Llamar a la función de actualización para actualizar la lista
-                                updateDataDetalleCarrito(prevData => prevData.filter(item => item.id_detalle !== idDetalle));
+                                updateDataDetalleCarrito(prevData => prevData.filter(item => item.id_detalle_producto !== idDetalleProducto));
                             } else {
                                 Alert.alert('Error al eliminar del carrito', data.error);
                             }
@@ -48,7 +50,7 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
     return (
         <View style={styles.itemContainer}>
             <TouchableOpacity style={{ borderColor: 'red', borderWidth: 2, borderRadius: 20, width: 35, height: 32, alignSelf: 'flex-end' }}
-                onPress={() => handleDeleteDetalleCarrito(item.id_detalle_producto)}
+                onPress={() => handleDeleteDetalleCarrito(item.id_detalle_producto, item.id_detalle_pedido)}
             >
                 <Image source={require('../../../assets/menos.png')} style={{ height: 30, width: 30, }} />
             </TouchableOpacity>

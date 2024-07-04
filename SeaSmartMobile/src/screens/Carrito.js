@@ -9,9 +9,11 @@ import CarritoCard from '../components/CarritoCard/CarritoCard';
 export default function Carrito({ navigation }) {
 
   const [dataDetalleCarrito, setDataDetalleCarrito] = useState([]);
-  const [cantidad, setCantidad] = useState(null);
-  const [idDetalle, setIdDetalle] = useState(null);
+  const [idDetallePedido, setIdDetallePedido] = useState(null);
+  const [idDetalleProducto, setIdDetalleProducto] = useState(null);
   const [cantidadProductoCarrito, setCantidadProductoCarrito] = useState(0);
+  const [existenciaProducto, setExistenciaProducto] = useState(0);
+  const [nuevaCantidad, setNuevaCantidad] = useState(null);
   const [totalCarrito, setTotalCarrito] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const ip = Constantes.IP;
@@ -51,16 +53,19 @@ export default function Carrito({ navigation }) {
   };
 
   // Función para manejar la modificación de un detalle del carrito
-  const handleEditarDetalle = (idDetalle, cantidadDetalle) => {
+  const handleEditarDetalle = (idDetallePedido, cantidadDetalle, existencias, idDetalleProducto) => {
     setModalVisible(true);
-    setIdDetalle(idDetalle);
+    setIdDetallePedido(idDetallePedido);
+    setIdDetalleProducto(idDetalleProducto);
     setCantidadProductoCarrito(cantidadDetalle);
+    setNuevaCantidad(cantidadDetalle);
+    setExistenciaProducto(existencias);
   };
 
   const renderItem = ({ item }) => (
     <CarritoCard
       item={item}
-      accionBotonDetalle={handleEditarDetalle}
+      accionBotonDetalle={() => handleEditarDetalle(item.id_detalle_pedido, item.cantidad_producto, item.existencia_producto, item.id_detalle_producto)}
       updateDataDetalleCarrito={setDataDetalleCarrito} // Nueva prop para actualizar la lista
     />
   );
@@ -70,11 +75,13 @@ export default function Carrito({ navigation }) {
       <ModalEditarCantidad
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
-        idDetalle={idDetalle}
-        setIdDetalle={setIdDetalle}
-        setCantidadProductoCarrito={setCantidadProductoCarrito}
+        idDetallePedido={idDetallePedido}
+        idDetalleProducto={idDetalleProducto}
         cantidadProductoCarrito={cantidadProductoCarrito}
         getDetalleCarrito={getDetalleCarrito}
+        nuevaCantidad={nuevaCantidad}
+        setNuevaCantidad={setNuevaCantidad}
+        existencias={existenciaProducto}
       />
 
       {/* Título de la pantalla */}
