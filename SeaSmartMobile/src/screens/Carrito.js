@@ -4,7 +4,7 @@ import Buttons from '../components/Buttons/Buttons';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Constantes from '../utils/Constantes';
 import ModalEditarCantidad from '../components/Modales/ModalEditarCantidad';
-import CarritoCard from '../components/CarritoCard/CarritoCard';
+import CarritoCard from '../components/Cards/CarritoCard';
 
 export default function Carrito({ navigation }) {
 
@@ -109,7 +109,7 @@ export default function Carrito({ navigation }) {
         </View>
       )}
 
-      {/* Botones de finalizar pedido y regresar a productos */}
+      {/* Botón de finalizar pedido */}
       <View>
         {dataDetalleCarrito.length > 0 && (
           <Buttons

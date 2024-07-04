@@ -7,31 +7,6 @@ export default function Pedidos({ navigation }) {
   const [nombre, setNombre] = useState(null);
   const ip = Constantes.IP;
 
-  const handleLogout = async () => {
-    console.log('a1');
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
-    }
-  };
-
-  const irActualizar = () => {
-    navigation.navigate('Productos');
-  };
-
-  const EditUser = () => {
-    navigation.navigate('UpdateUser');
-  };
-
   const getUser = async () => {
     console.log('b1');
     try {
@@ -67,7 +42,7 @@ export default function Pedidos({ navigation }) {
         </View>
       </View>
 
-      <View style={{ backgroundColor: 'blue' }}>
+      <View>
         <View
           style={{
             borderBottomColor: 'black',

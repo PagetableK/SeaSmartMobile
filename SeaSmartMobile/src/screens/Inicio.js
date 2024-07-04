@@ -16,23 +16,7 @@ export default function Inicio({ navigation }) {
   const [existenciaProducto, setExistenciaProducto] = useState(1);
   const [precioProducto, setPrecioProducto] = useState(0);
   const ip = Constantes.IP;
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
-    }
-  };
-
+  
   const abrirAgregar = (id, nombre, talla, existencia, precio) => {
     setModalVisible(true);
     setIdProducto(id);
@@ -54,23 +38,6 @@ export default function Inicio({ navigation }) {
       } else if (data.error = "Acción no disponible fuera de la sesión") {
         // navigation.navigate('Login');
         console.log('cha');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', toString(error));
-    }
-  };
-
-  const getUser = async () => {
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.error = "Acción no disponible fuera de la sesión") {
-        // navigation.navigate('Login');
-        console.log('che');
       } else {
         Alert.alert('Error', data.error);
       }
