@@ -8,31 +8,39 @@ import ModalDirecciones from '../components/Modales/ModalDirecciones';
 
 export default function Direcciones({ navigation }) {
 
-    const ip = Constantes.IP;
-
     const [dataDirecciones, setDataDirecciones] = useState([]);
     const [idDireccion, setIdDireccion] = useState(null);
     const [direccion, setDireccion] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [direccionVieja, setDireccionVieja] = useState(null);
 
+    const ip = Constantes.IP;
+
+    // La función useEffect se ejecuta cada vez que se carga la pantalla.
     useEffect(() => {
+        // Se manda a llamar a la función para obtener las direcciones del cliente.
         getDirecciones();
     }, []);
 
+    // La función getDirecciones carga los datos provenientes de la API dentro de la constante dataDirecciones.
     const getDirecciones = async () => {
         try {
+            // Se realiza la petición para obtener las direcciones agregadas por el cliente.
             const response = await fetch(`${ip}/SeaSmart/api/services/public/direcciones.php?action=readAll`, {
                 method: 'GET',
             });
 
+            // Se almacena la respuesta en la constante en formato JSON.
             const data = await response.json();
 
-            console.log(data, "Data desde getDirecciones")
-
+            // Si la respuesta es satisfactoria se ejecuta el código.
             if (data.status) {
+                // Se carga el conjunto de datos dentro la constante dataDirecciones.
                 setDataDirecciones(data.dataset);
-            } else {
+            }
+            // Si la respuesta no es satisfactoria se ejecuta el código.
+            else {
+                // Se muestra el mensaje en consola.
                 console.log("No hay direcciones disponibles")
             }
         } catch (error) {
@@ -43,6 +51,7 @@ export default function Direcciones({ navigation }) {
 
     // Función para manejar la modificación de una dirección
     const handleEditarDireccion = (idDireccion, direccion) => {
+        // Se configuran los valores de las constantes para preparar el modal que permite editar una dirección.
         setModalVisible(true);
         setIdDireccion(idDireccion);
         setDireccion(direccion);
@@ -50,14 +59,17 @@ export default function Direcciones({ navigation }) {
     };
 
 
-    // Función para manejar la acción de agregar de una dirección
+    // Función para manejar la acción de agregar de una dirección.
     const handleAgregarDireccion = () => {
+        // Se configuran los valores de las constantes para preparar el modal que permite agregar una dirección.
         setModalVisible(true);
         setIdDireccion(null);
         setDireccion('');
     }
 
+    // Función renderItem carga una Card con la dirección.
     const renderItem = ({ item }) => (
+        // Se manda a llamar el componente DireccionCard y se configuran los valores iniciales.
         <DireccionCard
             item={item}
             accionBoton={() => handleEditarDireccion(item.id_direccion, item.direccion)}
@@ -78,6 +90,13 @@ export default function Direcciones({ navigation }) {
                 direccionVieja={direccionVieja}
             />
 
+            <TouchableOpacity style={{
+                display: 'flex', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width, marginLeft: Dimensions.get('window').width / 20, marginTop: Dimensions.get('window').height / 40, marginBottom: 20, gap: 10
+            }} onPress={() => navigation.goBack()}>
+                <Image source={require('../../assets/flecha_regreso.png')} style={{ height: 35, width: 35 }} />
+                <Text style={{ fontSize: 20 }}>Regresar</Text>
+            </TouchableOpacity>
+
             {/* Título de la pantalla */}
             <Text style={styles.title}>Direcciones</Text>
 
@@ -88,6 +107,7 @@ export default function Direcciones({ navigation }) {
                     width: Dimensions.get('window').width / 1.1,
                 }}
             />
+
             {/* Lista de direcciones */}
             {dataDirecciones.length > 0 ? (
                 <FlatList
@@ -102,6 +122,7 @@ export default function Direcciones({ navigation }) {
                     <Image source={require('../../assets/direccion_pregunta.png')} style={{ width: 200, height: 200 }} />
                 </View>
             )}
+
             {/* Botón de finalizar pedido */}
             <View style={{}}>
                 <Buttons
@@ -109,6 +130,7 @@ export default function Direcciones({ navigation }) {
                     accionBoton={handleAgregarDireccion}
                 />
             </View>
+
         </View>
     );
 
@@ -128,7 +150,6 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         width: Dimensions.get('window').width,
         marginLeft: Dimensions.get('window').width / 10,
-        marginTop: Dimensions.get('window').height / 30,
         flex: 0.1,
         color: '#000', // Brown color for the title
     },

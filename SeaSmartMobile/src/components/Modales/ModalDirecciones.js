@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity, Image, Alert, Dimensions } from 'react-native';
+import { Text, Modal, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import Buttons from '../Buttons/Buttons';
 import * as Constantes from '../../utils/Constantes';
@@ -8,29 +7,42 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
 
     const ip = Constantes.IP;
 
+    // La función handleUpdateDireccion permite actualizar una dirección.
     const handleUpdateDireccion = async () => {
         try {
+            // Se valida el valor del campo dirección.
             if (validarDireccion()) {
-            } else if(direccion.trim() == direccionVieja){
+            } 
+            // Si la dirección digitada es igual a la dirección actual se oculta el modal.
+            else if(direccion.trim() == direccionVieja){
                 setModalVisible(!modalVisible);
             } else {
+                // Se inicializa la constante que almacenará los valores antes de hacer la petición a la API.
                 const formData = new FormData();
                 formData.append('idDireccion', idDireccion);
                 formData.append('inputDireccion', direccion);
 
+                // Se realiza la petición hacia la API.
                 const response = await fetch(`${ip}/SeaSmart/api/services/public/direcciones.php?action=updateRow`, {
                     method: 'POST',
                     body: formData
                 });
 
+                // Se almacena la respuesta en la constante en formato JSON.
                 const data = await response.json();
 
+                // Si la respuesta es satisfactoria se ejecuta el código.
                 if (data.status) {
+                    // Se muestra el mensaje.
                     Alert.alert('Dirección actualizada correctamente');
+                    // Se vuelven a cargar las direcciones.
                     getDirecciones();
-                } else {
+                } 
+                // Si la respuesta no es satisfactoria se muestra el error con el mensaje.
+                else {
                     Alert.alert('Ocurrió un error al actualizar la dirección', data.error);
                 }
+                // Se oculta el modal.
                 setModalVisible(false);
             }
         } catch (error) {
@@ -39,27 +51,37 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
         }
     };
 
+    // La función handleAddDireccion permite agregar una dirección.
     const handleAddDireccion = async () => {
         try {
+            // Se valida el valor del campo dirección.
             if (validarDireccion()) {
-            }
-            else {
+            } else {
+                // Se inicializa la constante de tipo formData dónde se almacenará la dirección.
                 const formData = new FormData();
                 formData.append('inputDireccion', direccion);
 
+                // Se realiza la petición a la API.
                 const response = await fetch(`${ip}/SeaSmart/api/services/public/direcciones.php?action=createRow`, {
                     method: 'POST',
                     body: formData
                 });
 
+                // Se almacena la respuesta en la constante en formato JSON.
                 const data = await response.json();
 
+                // Si la respuesta es satisfactoria se ejecuta el código.
                 if (data.status) {
+                    // Se muestra el mensaje.
                     Alert.alert('Dirección agregada correctamente');
+                    // Se vuelven a cargar las direcciones.
                     getDirecciones();
-                } else {
+                } 
+                // Si la respuesta no es satisfactoria se muestra el error con el mensaje.
+                else {
                     Alert.alert('Ocurrió un error al agregar la dirección', data.error);
                 }
+                // Se oculta el modal.
                 setModalVisible(false);
             }
         } catch (error) {
@@ -68,14 +90,22 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
         }
     }
 
+    // La función validarDireccion valida el valor del campo dirección.
     function validarDireccion() {
+        // Si el campo está vacío se ejecuta el código.
         if (direccion.trim() == "") {
+            // Se muestra el mensaje.
             Alert.alert('La dirección no es válida', 'Asegúrese de agregar una dirección');
             return true;
-        } else if (direccion.length < 10 || direccion.length > 100) {
+        } 
+        // Si el campo no cumple con la longitud requerida se ejecuta el código.
+        else if (direccion.length < 10 || direccion.length > 100) {
+            // Se muestra el mensaje con la advertencia.
             Alert.alert('La dirección no es válida', 'La longitud de la dirección debe ser de mínimo 10 caracteres y máximo 100');
             return true;
-        } else {
+        } 
+        // Si el campo cumple con la longitud requerida se retorna el valor.
+        else {
             return false;
         }
     }
@@ -91,6 +121,7 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
         >
             <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPress={() => setModalVisible(!modalVisible)}>
                 <TouchableOpacity style={styles.modalView} activeOpacity={1}>
+
                     <TextInput
                         style={styles.input}
                         label="Ingrese su dirección aquí"
@@ -104,6 +135,7 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
                             },
                         }}>
                     </TextInput>
+
                     {idDireccion == null ? (
                         <Buttons textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion}>
                         </Buttons>
@@ -112,6 +144,7 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
                             <Text style={styles.buttonText}>Actualizar dirección</Text>
                         </TouchableOpacity>
                     )}
+
                 </TouchableOpacity>
             </TouchableOpacity>
         </Modal>
@@ -140,11 +173,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
-    modalText: {
-        marginBottom: 10,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     input: {
         borderColor: '#ccc',
         backgroundColor: '#FFFFFF',
@@ -165,15 +193,5 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         color: "#FFF", fontWeight: '500', textTransform: 'uppercase'
-    },
-    containerCantidad: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'row',
-        gap: 20
-    },
-    image: {
-        height: 40,
-        width: 40
     },
 });

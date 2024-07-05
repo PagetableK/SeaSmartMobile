@@ -12,7 +12,7 @@ const DireccionCard = ({ item, accionBoton, updateDataDireccion }) => {
             // Mostrar un mensaje de confirmación antes de eliminar
             Alert.alert(
                 'Confirmación',
-                '¿Estás seguro de que deseas eliminar este elemento del carrito?',
+                '¿Está seguro de que desea eliminar la dirección?',
                 [
                     {
                         text: 'Cancelar',
