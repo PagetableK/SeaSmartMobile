@@ -14,3 +14,4 @@ CC BY 4.0 DEED: Cualquier persona es libre de:
   
 Dependencias instaladas:
 npm i react-native-picker-select
+npm i @react-navigation/stack

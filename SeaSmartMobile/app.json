@@ -4,6 +4,7 @@
     "slug": "SeaSmartMobile",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/icon1.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/adaptive-icon1.png",
