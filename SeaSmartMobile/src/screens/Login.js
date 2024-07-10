@@ -4,6 +4,7 @@ import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../utils/Constantes';
 
 export default function Login({ navigation }) {
+  
   const ip = Constantes.IP;
   const [correo, setCorreo] = useState('');
   const [contra, setContra] = useState('');
@@ -31,7 +32,7 @@ export default function Login({ navigation }) {
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
-    }
+    }*/
   };
   
 

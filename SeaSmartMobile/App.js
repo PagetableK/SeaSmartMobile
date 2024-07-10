@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Inicio from './src/screens/Inicio.js'
 import Login from './src/screens/Login.js'
 import Registro from './src/screens/Registro.js'
+import Productos from './src/screens/Productos.js';
 import Direcciones from './src/screens/Direcciones.js'
 import TabNavigator from './src/navigation/TabNavigator.js';
 import NavStack from './src/navigation/NavStack';
@@ -44,7 +45,6 @@ export default function App() {
         // Si la aplicación está lista, muestra el componente stack.
         <Stack.Navigator
           initialRouteName='Login'
-
           screenOptions={{
             headerShown: false
           }}>
