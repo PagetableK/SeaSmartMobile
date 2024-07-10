@@ -1,27 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../utils/Constantes';
 
 export default function Login({ navigation }) {
-  
+
   const ip = Constantes.IP;
   const [correo, setCorreo] = useState('');
   const [contra, setContra] = useState('');
+
+  // La acción useFocusEffect se ejecuta una vez que la pantalla se ha terminado de cargar (Similar a useEffect).
+  useFocusEffect(
+    // La función useCallBack ejecuta el código dentro de ella cada vez que se termina de cargar la pantalla.
+    React.useCallback(() => {
+      // Llamada a la función getDetalleCarrito.
+      handleLogOut();
+    }, [])
+  );
+
+  const handleLogOut = async () => {
+    try {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
+        method: 'GET'
+      });
+
+      const data = await response.json();
+
+      if (data.status) {
+      } else {
+      }
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
+    }
+  }
 
   const handlerLogin = async () => {
     try {
       const formData = new FormData();
       formData.append('correo', correo);
       formData.append('contra', contra);
-  
+
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logIn`, {
         method: 'POST',
         body: formData
       });
-  
+
       const data = await response.json();
-  
+
       if (data.status) {
         setContra('');
         setCorreo('');
@@ -32,9 +59,9 @@ export default function Login({ navigation }) {
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
-    }*/
+    }
   };
-  
+
 
   const irRegistrar = () => {
     navigation.navigate('Registro');

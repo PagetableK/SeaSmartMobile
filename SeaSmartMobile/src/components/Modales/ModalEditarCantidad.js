@@ -30,7 +30,7 @@ const ModalEditarCantidad = ({ setModalVisible, modalVisible, idDetallePedido, i
         // Si la respuesta es satisfactoria se ejecuta el código.
         if (data.status) {
           // Se muestra el mensaje.
-          Alert.alert('Se actualizo el detalle del pedido');
+          Alert.alert('Se actualizó el detalle del pedido');
           // Se vuelven a cargar los productos agregados al carrito.
           getDetalleCarrito();
         } 

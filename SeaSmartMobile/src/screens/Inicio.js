@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, TextInput, FlatList, Dimensions, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Alert, FlatList, Dimensions, SafeAreaView, Text } from 'react-native';
 import Buttons from '../components/Buttons/Buttons';
 import ModalCompra from '../components/Modales/ModalCompra';
 import Constants from 'expo-constants';
 import * as Constantes from '../utils/Constantes';
-import fetchData from '../components/utils/fetchData';
-
-const BASE_URL_IMG = "http://192.168.0.9/SeaSmart/api/images/categorias/";
 
 export default function Inicio({ navigation }) {
-  //HAZEL
-  // Estados para manejar nombre del usuario, categorías, texto de búsqueda y categorías filtradas
-  const [nombre, setNombre] = useState(null);
-  const [categories, setCategories] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  const ip = Constantes.IP;
-
-  //PABLO
   const [modalVisible, setModalVisible] = useState(false);
   const [productos, setProductos] = useState([]);
   const [idProducto, setIdProducto] = useState('');
@@ -26,8 +14,9 @@ export default function Inicio({ navigation }) {
   const [cantidadProducto, setCantidadProducto] = useState(1);
   const [existenciaProducto, setExistenciaProducto] = useState(1);
   const [precioProducto, setPrecioProducto] = useState(0);
+  const [usuario, setUsuario] = useState('');
   const ip = Constantes.IP;
-  
+
   const abrirAgregar = (id, nombre, talla, existencia, precio) => {
     setModalVisible(true);
     setIdProducto(id);
@@ -44,11 +33,13 @@ export default function Inicio({ navigation }) {
       });
       const data = await response.json();
       if (data.status) {
-        console.log('a');
         setProductos(data.dataset);
+        setUsuario(data.nombre);
+        console.log(usuario+"a");
       } else if (data.error = "Acción no disponible fuera de la sesión") {
         // navigation.navigate('Login');
-        console.log('cha');
+        console.log(data.error);
+        console.log(data.session);
       } else {
         Alert.alert('Error', data.error);
       }
@@ -57,83 +48,13 @@ export default function Inicio({ navigation }) {
     }
   };
 
-  // Función para obtener las categorías desde la API
-  const fetchCategories = async () => {
-    try {
-      const response = await fetchData('categorias', 'readAll');
-      console.log('Categorías obtenidas:', response);
-
-      if (response.status === 1 && Array.isArray(response.dataset)) {
-        // Filtra las categorías únicas por id_categoria
-        const uniqueCategories = response.dataset.filter((item, index, self) =>
-          index === self.findIndex((t) => t.id_categoria === item.id_categoria)
-        );
-        setCategories(uniqueCategories);
-        setFilteredCategories(uniqueCategories);
-      } else {
-        Alert.alert('Error', 'Ocurrió un error al obtener las categorías');
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al obtener las categorías');
-    }
-  };
-
-  // Función para manejar la búsqueda de categorías
-  const handleSearch = (text) => {
-    setSearchText(text);
-    const filtered = categories.filter((category) =>
-      category.nombre_categoria.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredCategories(filtered);
-  };
-
-  // Hook para ejecutar fetchCategories al montar el componente
+  // Hook para ejecutar cargarProductos al montar el componente
   useEffect(() => {
-    //HAZEL
-    fetchCategories();
-    //PABLO
     cargarProductos();
   }, []);
 
-  // Función para renderizar cada ítem en la lista de categorías
-  const renderItem = ({ item }) => (
-    <View style={styles.cardContainer}>
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>{item.nombre_categoria}</Text>
-        <Image 
-          source={item.imagen_categoria ? { uri: `${BASE_URL_IMG}${item.imagen_categoria}` } : `${BASE_URL_IMG}${item.imagen_categoria}`} 
-          style={styles.cardImage} 
-          onError={(e) => console.log('Image Load Error:', e.nativeEvent.error)}
-        />
-        <Text style={styles.cardDescription}>{item.descripcion_categoria}</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Productos', { idCategoria: item.id_categoria })}>
-          <Text style={styles.buttonText}>Ver productos</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-
   // Componente principal de renderizado
   return (
-
-    <ScrollView style={styles.container}>
-      <View style={styles.searchContainer}>
-        <TextInput 
-          style={styles.searchInput} 
-          placeholder="Buscar una categoría" 
-          value={searchText} 
-          onChangeText={handleSearch}
-        />
-      </View>
-      <Text style={styles.categoryText}>Categorías</Text>
-      <FlatList
-        data={filteredCategories}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id_categoria.toString()}
-        contentContainerStyle={styles.categoryContainer}
-      />
-    </ScrollView>
-
     <View style={styles.container}>
       <ModalCompra
         visible={modalVisible}
@@ -146,6 +67,20 @@ export default function Inicio({ navigation }) {
         precioProducto={precioProducto}
         setCantidad={setCantidadProducto}
       />
+
+      {/* Título de la pantalla */}
+      <Text style={styles.title}>Inicio</Text>
+
+      <Text style={styles.title2}>Bienvenido {usuario}!</Text>
+
+      <View
+        style={{
+          borderBottomColor: 'black',
+          borderBottomWidth: 2,
+          width: Dimensions.get('window').width / 1.1,
+        }}
+      />
+
       <SafeAreaView style={styles.containerFlat}>
         <FlatList
           data={productos}
@@ -158,7 +93,6 @@ export default function Inicio({ navigation }) {
         />
       </SafeAreaView>
     </View>
-
   );
 }
 
@@ -173,6 +107,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column'
   },
   searchContainer: {
     padding: 10,
@@ -257,5 +194,24 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     gap: 20
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    width: Dimensions.get('window').width,
+    marginLeft: Dimensions.get('window').width / 10,
+    marginTop: Dimensions.get('window').height / 30,
+    flex: 0.06,
+    color: '#000',
+  },
+  title2: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'left',
+    width: Dimensions.get('window').width,
+    marginLeft: Dimensions.get('window').width / 10,
+    flex: 0.06,
+    color: '#000',
   },
 });

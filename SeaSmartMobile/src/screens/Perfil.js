@@ -14,19 +14,7 @@ export default function Perfil({ navigation }) {
   const ip = Constantes.IP;
 
   const handleLogout = async () => {
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
-    }
+    navigation.navigate('Login');
   }
 
   const getUser = async () => {
