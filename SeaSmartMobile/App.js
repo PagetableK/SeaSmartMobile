@@ -54,7 +54,7 @@ export default function App() {
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>) : 
         // Si la aplicación no está lista, muestra el componente NavStack
-        <NavStack />}
+        (<NavStack />)}
     </NavigationContainer>
   );
 }

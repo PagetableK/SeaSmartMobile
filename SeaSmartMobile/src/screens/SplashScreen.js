@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, Image, Animated, Easing } from 'react-native';
+import { StyleSheet, Text, View, Image, Animated, Easing, Dimensions } from 'react-native';
 
 export default function SplashScreen() {
 
 
   const [counter, setCounter] = useState(3);
 
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setCounter(prevCounter => prevCounter - 1);
-//     }, 1000);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCounter(prevCounter => prevCounter - 1);
+    }, 1000);
 
-//     return () => clearInterval(timer);
-//   }, []);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <View  style={styles.container}>
@@ -20,7 +20,8 @@ export default function SplashScreen() {
         Bienvenidos
       </Text>
       <Image
-        source={require('../../assets/barcola.gif')}
+        source={require('../../assets/olagif.gif')}
+        style={{height: Dimensions.get('window').height / 2, width: Dimensions.get('window').width}}
       />
     </View>
   );
