@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView  } from 'react-native';
 import { useState } from 'react';
 export default function Buttons({textoBoton, accionBoton}) {
 

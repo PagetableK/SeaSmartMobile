@@ -5,7 +5,6 @@ import * as Constantes from '../utils/Constantes';
 
 export default function Login({ navigation }) {
   const ip = Constantes.IP;
-
   const [correo, setCorreo] = useState('');
   const [contra, setContra] = useState('');
 
@@ -41,6 +40,7 @@ export default function Login({ navigation }) {
   };
 
   useEffect(() => {
+    // validarSesion()
     // Lógica para validar
   }, []);
 

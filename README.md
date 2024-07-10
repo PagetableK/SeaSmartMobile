@@ -13,3 +13,5 @@ CC BY 4.0 DEED: Cualquier persona es libre de:
   •Sin aplicar restricciones adicionales, no es posible aplicar términos legales o medidas tecnológicas que          restringan legalmente a otros de hacer algo que la licencia permite.
   
 Dependencias instaladas:
+npm i react-native-picker-select
+npm i @react-navigation/stack
