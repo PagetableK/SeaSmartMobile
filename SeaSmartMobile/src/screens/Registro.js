@@ -29,8 +29,8 @@ export default function SignUp({ navigation }) {
             formData.append('apellidoCliente', apellido);
             formData.append('correoCliente', correo);
             formData.append('duiCliente', dui);
-            formData.append('telefonoFijo', telefono_fijo); // nombre cambiado para coincidir con el PHP
-            formData.append('telefonoMovil', telefono); // nombre cambiado para coincidir con el PHP
+            formData.append('telefonoFijo', telefono_fijo); 
+            formData.append('telefonoMovil', telefono); 
             formData.append('claveCliente', contra);
             formData.append('confirmarClave', confirmarContra);
 
