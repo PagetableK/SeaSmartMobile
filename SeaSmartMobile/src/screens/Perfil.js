@@ -7,7 +7,7 @@ export default function Perfil({ navigation }) {
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [correo, setCorreo] = useState('');
-  const [dui, setDUI] = useState('');
+  const [dui, setDui] = useState('');
   const [telefono, setTelefono] = useState('');
   const [telefono_fijo, setTelefono_Fijo] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +39,7 @@ export default function Perfil({ navigation }) {
         setNombre(data.nombre);
         setApellido(data.apellido);
         setCorreo(data.correo);
-        setDUI(data.dui);
+        setDui(data.dui);
         setTelefono(data.telefono);
         setTelefono_Fijo(data.telefono_fijo);
       } else {
@@ -125,11 +125,11 @@ export default function Perfil({ navigation }) {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>DUI: </Text>
+        <Text style={styles.label}>DUI: </ Text>
         <TextInput
           style={styles.input}
           value={dui}
-          onChangeText={setDUI}
+          onChangeText={setDui}
           editable={isEditing}
         />
         {isEditing && <TouchableOpacity onPress={() => {}}><Text>✏️</Text></TouchableOpacity>}
