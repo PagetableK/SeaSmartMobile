@@ -55,7 +55,10 @@ export default function Login({ navigation }) {
   }
 
   const handlerLogin = async () => {
-    console.log('c');
+    setContra('')
+        setUsuario('')
+        navigation.navigate('TabNavigator');
+    /*console.log('c');
     try {
       const formData = new FormData();
       formData.append('correo', usuario);
@@ -79,7 +82,7 @@ export default function Login({ navigation }) {
     } catch (error) {
       console.error(error, "Error desde Catch");
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
-    }
+    }*/
   };
 
   const irRegistrar = async () => {

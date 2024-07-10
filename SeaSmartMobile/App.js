@@ -24,7 +24,7 @@ export default function App() {
         <Stack.Screen name="Registro" component={Registro} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
         <Stack.Screen name="Inicio" component={Inicio} />
-        <Stack.Screen name="Productos" component={Productos} />
+        {/* <Stack.Screen name="Productos" component={Productos} /> */}
       </Stack.Navigator>
     </NavigationContainer>
 
