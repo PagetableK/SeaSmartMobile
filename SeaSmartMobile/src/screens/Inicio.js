@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, TextInput, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, ScrollView, TextInput, FlatList, Dimensions, SafeAreaView } from 'react-native';
+import Buttons from '../components/Buttons/Buttons';
+import ModalCompra from '../components/Modales/ModalCompra';
+import Constants from 'expo-constants';
 import * as Constantes from '../utils/Constantes';
 import fetchData from '../components/utils/fetchData';
 
 const BASE_URL_IMG = "http://192.168.0.9/SeaSmart/api/images/categorias/";
 
 export default function Inicio({ navigation }) {
+  //HAZEL
   // Estados para manejar nombre del usuario, categorías, texto de búsqueda y categorías filtradas
   const [nombre, setNombre] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -13,32 +17,38 @@ export default function Inicio({ navigation }) {
   const [filteredCategories, setFilteredCategories] = useState([]);
   const ip = Constantes.IP;
 
-  // Función para manejar el cierre de sesión
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      if (data.status) {
-        navigation.navigate('Login');
-      } else {
-        Alert.alert('Error', data.error);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
-    }
+  //PABLO
+  const [modalVisible, setModalVisible] = useState(false);
+  const [productos, setProductos] = useState([]);
+  const [idProducto, setIdProducto] = useState('');
+  const [nombreProducto, setNombreProducto] = useState('');
+  const [tallaProducto, setTallaProducto] = useState('');
+  const [cantidadProducto, setCantidadProducto] = useState(1);
+  const [existenciaProducto, setExistenciaProducto] = useState(1);
+  const [precioProducto, setPrecioProducto] = useState(0);
+  const ip = Constantes.IP;
+  
+  const abrirAgregar = (id, nombre, talla, existencia, precio) => {
+    setModalVisible(true);
+    setIdProducto(id);
+    setNombreProducto(nombre);
+    setTallaProducto(talla);
+    setExistenciaProducto(existencia);
+    setPrecioProducto(precio);
   };
 
-  // Función para obtener los datos del usuario
-  const getUser = async () => {
+  const cargarProductos = async () => {
     try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=getUser`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/productos.php?action=getProducts`, {
         method: 'GET'
       });
       const data = await response.json();
       if (data.status) {
-        setNombre(data.username);
+        console.log('a');
+        setProductos(data.dataset);
+      } else if (data.error = "Acción no disponible fuera de la sesión") {
+        // navigation.navigate('Login');
+        console.log('cha');
       } else {
         Alert.alert('Error', data.error);
       }
@@ -79,7 +89,10 @@ export default function Inicio({ navigation }) {
 
   // Hook para ejecutar fetchCategories al montar el componente
   useEffect(() => {
+    //HAZEL
     fetchCategories();
+    //PABLO
+    cargarProductos();
   }, []);
 
   // Función para renderizar cada ítem en la lista de categorías
@@ -102,6 +115,7 @@ export default function Inicio({ navigation }) {
 
   // Componente principal de renderizado
   return (
+
     <ScrollView style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput 
@@ -119,6 +133,32 @@ export default function Inicio({ navigation }) {
         contentContainerStyle={styles.categoryContainer}
       />
     </ScrollView>
+
+    <View style={styles.container}>
+      <ModalCompra
+        visible={modalVisible}
+        cerrarModal={setModalVisible}
+        nombreProductoModal={nombreProducto}
+        tallaProductoModal={tallaProducto}
+        idDetalleProductoModal={idProducto}
+        cantidad={cantidadProducto}
+        existencias={existenciaProducto}
+        precioProducto={precioProducto}
+        setCantidad={setCantidadProducto}
+      />
+      <SafeAreaView style={styles.containerFlat}>
+        <FlatList
+          data={productos}
+          horizontal={false}
+          renderItem={({ item }) => (
+            <View>
+              <Buttons textoBoton={item.nombre_producto + " - " + item.color_producto + " - Talla: " + item.talla} accionBoton={() => abrirAgregar(item.id_detalle_producto, item.nombre_producto + "-" + item.color_producto, item.talla, item.existencia_producto, item.precio_producto)}>Agregar al carrito</Buttons>
+            </View>
+          )}
+        />
+      </SafeAreaView>
+    </View>
+
   );
 }
 
@@ -126,6 +166,10 @@ const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9; // Ancho constante de la tarjeta
 
 const styles = StyleSheet.create({
+  containerFlat: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -191,5 +235,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     textAlign: 'center',
+    marginVertical: 5,
+    color: '#5C3D2E', // Brown color for the title
+  }, centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  }, modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: '',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    gap: 20
   },
 });
