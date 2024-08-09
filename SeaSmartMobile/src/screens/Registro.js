@@ -48,6 +48,7 @@ export default function SignUp({ navigation }) {
             }
         } catch (error) {
             Alert.alert('Ocurrió un error al intentar crear el usuario');
+            console.log(error);
         }
     };
 
