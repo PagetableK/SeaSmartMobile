@@ -1,9 +1,10 @@
 # SeaSmartMobile
 -- Aplicación móvil del proyecto SeaSmart --
 
-Integrantes: * Pablo Ismael Sánchez Hernández
-             * Katherine Ariana Melgar Echegoyen
-             * Hazel Nicole García Hernández
+Integrantes: 
+* Pablo Ismael Sánchez Hernández
+* Katherine Ariana Melgar Echegoyen
+* Hazel Nicole García Hernández
 
 Acerca de Creative Commons: 
 CC BY 4.0 DEED: Cualquier persona es libre de:
