@@ -4,8 +4,9 @@
 Integrantes: 
 * Pablo Ismael Sánchez Hernández
 * Katherine Ariana Melgar Echegoyen
-* Hazel Nicole García Hernández
+* Roberto Alfonso Escamilla Ruiz
 
+  
 Acerca de Creative Commons: 
 CC BY 4.0 DEED: Cualquier persona es libre de:
 * Compartir y redistribuir el material en cualquier medio o formato para cualquier propósito, incluso comercial.
