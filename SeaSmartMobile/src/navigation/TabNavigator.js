@@ -9,7 +9,7 @@ import Pedidos from '../screens/Pedidos';
 import Perfil from '../screens/Perfil';
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ( navigation ) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -52,7 +52,6 @@ const TabNavigator = () => {
         name="Mi perfil"
         component={Perfil}
         options={{ title: 'Mi perfil' }}
-        
       />
     </Tab.Navigator>
   );
