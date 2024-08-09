@@ -1,9 +1,9 @@
 # SeaSmartMobile
 -- Aplicación móvil del proyecto SeaSmart --
 
-Integrantes: Pablo Ismael Sánchez Hernández
-             Katherine Ariana Melgar Echegoyen
-             Hazel Nicole García Hernández
+Integrantes: * Pablo Ismael Sánchez Hernández
+             * Katherine Ariana Melgar Echegoyen
+             * Hazel Nicole García Hernández
 
 Acerca de Creative Commons: 
 CC BY 4.0 DEED: Cualquier persona es libre de:
@@ -13,16 +13,16 @@ CC BY 4.0 DEED: Cualquier persona es libre de:
   •Sin aplicar restricciones adicionales, no es posible aplicar términos legales o medidas tecnológicas que          restringan legalmente a otros de hacer algo que la licencia permite.
   
 Dependencias instaladas:
-npm i react-native-picker-select
-npm i @react-navigation/stack
-npm i @expo/vector-icons
-npm i @react-navigation/bottom-tabs
-npm i @react-navigation/native
-npm i @react-navigation/native-stack
-npm i @react-navigation/stack
-npm i react-native-masked-text
-npm install react-native-paper
-npm i react-native-picker-select
-npm i react-native-vector-icons
-npm i react-native-snap-carousel
-npm i react-native-web
+* npm i react-native-picker-select
+* npm i @react-navigation/stack
+* npm i @expo/vector-icons
+* npm i @react-navigation/bottom-tabs
+* npm i @react-navigation/native
+* npm i @react-navigation/native-stack
+* npm i @react-navigation/stack
+* npm i react-native-masked-text
+* npm install react-native-paper
+* npm i react-native-picker-select
+* npm i react-native-vector-icons
+* npm i react-native-snap-carousel
+* npm i react-native-web
