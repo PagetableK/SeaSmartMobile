@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "1ddc9138-7bef-4723-bb4a-d11f44cac53c"
+      }
+    },
+    "android": {
+      "package": "com.escamilla7.seasmartmobile"
+    }
+  }
+}
