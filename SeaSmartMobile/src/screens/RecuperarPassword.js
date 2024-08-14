@@ -9,15 +9,30 @@ export default function RecuperarPassword({ navigation }) {
 
     const handleRecoverPassword = async () => {
         try {
+            console.log('asd');
+
+            // const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=recoverPassword`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({ correo }),
+            // });
+
+            const formData = new FormData();
+            formData.append('correo', correo);
             const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=recoverPassword`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ correo }),
+                body: formData,
             });
 
+
             const data = await response.json();
+
+            console.log(data);
 
             if (data.status) {
                 Alert.alert('Correo enviado', 'Se ha enviado un enlace para recuperar tu contraseña a tu correo electrónico.');

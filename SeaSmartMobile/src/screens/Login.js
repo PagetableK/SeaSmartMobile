@@ -31,7 +31,7 @@ export default function Login({ navigation }) {
       } else {
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error('Error al cerrar sesión:', error);
       Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
     }
   }
