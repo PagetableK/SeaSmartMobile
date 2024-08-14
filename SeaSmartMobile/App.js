@@ -9,6 +9,7 @@ import Productos from './src/screens/Productos.js';
 import Direcciones from './src/screens/Direcciones.js'
 import TabNavigator from './src/navigation/TabNavigator.js';
 import NavStack from './src/navigation/NavStack';
+import RecuperarPassword from './src/screens/RecuperarPassword.js';
 
 export default function App() {
 
@@ -50,6 +51,7 @@ export default function App() {
           }}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Registro" component={Registro} />
+          <Stack.Screen name="Recuperar" component={RecuperarPassword} />
           <Stack.Screen name="Direcciones" component={Direcciones} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>) : 

@@ -7,6 +7,7 @@ import Inicio from '../screens/Inicio';
 import Carrito from '../screens/Carrito';
 import Pedidos from '../screens/Pedidos';
 import Perfil from '../screens/Perfil';
+import RecuperarPassword from '../screens/RecuperarPassword';
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = ( navigation ) => {
@@ -47,6 +48,11 @@ const TabNavigator = ( navigation ) => {
         name="Mis pedidos"
         component={Pedidos}
         options={{ title: 'Mis pedidos' }}
+      />
+       <Tab.Screen
+        name="Recuperar password"
+        component={RecuperarPassword}
+        options={{ title: 'Mi carrito' }}
       />
       <Tab.Screen
         name="Mi perfil"

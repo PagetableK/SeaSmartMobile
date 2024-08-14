@@ -66,6 +66,9 @@ export default function Login({ navigation }) {
   const irRegistrar = () => {
     navigation.navigate('Registro');
   };
+  const irRecuperar = () => {
+    navigation.navigate('Recuperar');
+  };
 
   useEffect(() => {
     // validarSesion()
@@ -109,7 +112,11 @@ export default function Login({ navigation }) {
       <TouchableOpacity onPress={irRegistrar}>
         <Text style={styles.textRegistrar}>¿No tienes cuenta? Regístrate aquí</Text>
       </TouchableOpacity>
+      <TouchableOpacity onPress={irRecuperar}>
+        <Text style={styles.textRecuperar}>¿Olvidaste tu contraseña? Recuperala aquí</Text>
+      </TouchableOpacity>
     </View>
+    
   );
 }
 
@@ -127,6 +134,12 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   textRegistrar: {
+    color: '#322C2B',
+    fontWeight: '700',
+    fontSize: 18,
+    marginTop: 10
+  },
+  textRecuperar: {
     color: '#322C2B',
     fontWeight: '700',
     fontSize: 18,
