@@ -65,6 +65,9 @@ export default function Producto({ route, navigation }) {
             // Se almacena la respuesta en la constante en formato JSON.
             const data = await response.json();
 
+
+            console.log(data);
+
             // Si la respuesta es satisfactoria se ejecuta el código.
             if (data.status) {
                 // Se carga el conjunto de datos dentro la constante infoProducto.

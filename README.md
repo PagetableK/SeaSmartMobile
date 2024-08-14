@@ -24,7 +24,6 @@ Dependencias instaladas:
 * npm i @react-navigation/stack
 * npm i react-native-masked-text
 * npm install react-native-paper
-* npm i react-native-picker-select
 * npm i react-native-vector-icons
 * npm i react-native-snap-carousel
 * npm i react-native-web
