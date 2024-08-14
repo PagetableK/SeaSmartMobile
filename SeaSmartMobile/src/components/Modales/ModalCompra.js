@@ -3,7 +3,7 @@ import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Aler
 import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
 
-const ModalCompra = ({ visible, cerrarModal, nombreProductoModal, tallaProductoModal, idDetalleProductoModal, cantidad, setCantidad, existencias, precioProducto }) => {
+const ModalCompra = ({ visible, cerrarModal, infoProducto, detallesProducto, cantidad, setCantidad }) => {
 
     const ip = Constantes.IP;
 
@@ -73,6 +73,12 @@ const ModalCompra = ({ visible, cerrarModal, nombreProductoModal, tallaProductoM
         }
     };
 
+    // La función useEffect se ejecuta cada vez que se carga la pantalla.
+    useEffect(() => {
+        
+        console.log('bbb');
+    }, []);
+
     return (
         <Modal
             visible={visible}
@@ -84,8 +90,7 @@ const ModalCompra = ({ visible, cerrarModal, nombreProductoModal, tallaProductoM
         >
             <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPress={() => cerrarModal(!visible)}>
                 <TouchableOpacity style={styles.modalView} activeOpacity={1}>
-                    <Text style={styles.modalText}>{nombreProductoModal}</Text>
-                    <Text style={styles.modalText}>Talla: {tallaProductoModal}</Text>
+                    <Text style={styles.modalText}>{infoProducto.nombre_producto}</Text>
                     <View style={styles.containerCantidad}>
                         <Text style={styles.modalText}>Cantidad:</Text>
                         <View style={styles.containerCantidad}>

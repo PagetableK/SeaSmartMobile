@@ -7,14 +7,9 @@ import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 
 export default function Inicio({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [idCategoria, setIdCategoria] = useState('');
   const [nombreCategoria, setNombreCategoria] = useState('');
-  const [tallaProducto, setTallaProducto] = useState('');
-  const [cantidadProducto, setCantidadProducto] = useState(1);
-  const [existenciaProducto, setExistenciaProducto] = useState(1);
-  const [precioProducto, setPrecioProducto] = useState(0);
   const [usuario, setUsuario] = useState('');
   const ip = Constantes.IP;
 
@@ -104,7 +99,6 @@ export default function Inicio({ navigation }) {
 
       <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'left', width: Dimensions.get('window').width, paddingHorizontal: 30, marginTop: 20 }}>Categorías</Text>
 
-
       <SafeAreaView style={styles.containerFlat}>
         <FlatList
           data={categorias}
@@ -115,7 +109,7 @@ export default function Inicio({ navigation }) {
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, width: Dimensions.get('window').width }}>{item.nombre_categoria}</Text>
               <Image source={{ uri: `${ip}/SeaSmart/api/images/categorias/${item.imagen_categoria}` }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 15 }} />
               <Text style={{ color: 'white', fontSize: 18, fontWeight: 'semibold', }}>{item.descripcion_categoria}</Text>
-              <View style={{ alignSelf: 'center' }}>
+              <View style={{ alignSelf: 'center', width: '100%', alignItems: 'center' }}>
                 <SimpleButton textoBoton={'Ver productos'} colorBoton={'#8ab5e7'} colorTexto={'#fff'} accionBoton={() => abrirCategoria(item.id_categoria, item.nombre_categoria)} />
               </View>
             </View>

@@ -3,8 +3,8 @@ import { TextInput, Button, Modal } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
-import ModalDirecciones from '../components/Modales/ModalDirecciones';
 import Constants from 'expo-constants';
+import { CommonActions } from '@react-navigation/native';
 
 export default function VerProductos({ route, navigation }) {
 
@@ -18,6 +18,19 @@ export default function VerProductos({ route, navigation }) {
         // Se manda a llamar a la función para obtener los productos de la categoría.
         getProductos();
     }, []);
+
+    const abrirProducto = async (id) => {
+        // navigation.getParent().dispatch(
+        //   CommonActions.navigate({
+        //     name: 'Producto',
+        //     params: { id: id },
+        //   }
+        //   ))
+        
+        navigation.navigate('Producto', {
+            id: id,
+          });
+    }
 
     // La función getProductos carga los datos provenientes de la API en relación con la categoría.
     const getProductos = async () => {
@@ -35,12 +48,14 @@ export default function VerProductos({ route, navigation }) {
             // Se almacena la respuesta en la constante en formato JSON.
             const data = await response.json();
 
+            // Se almacenan en la variable los nombres de las subcategorías encontradas en los productos.
             var subcategorias = data.dataset.map((item) => { return { nombre_subcategoria: item.nombre_sub_categoria } });
             // Se almacena en la variable las subcategorias que se encuentran en el conjunto de datos.
             var array_subcategorias = data.dataset.map(item => item.nombre_sub_categoria);
             // Se remueven los duplicados del array y se almacena el conjunto de datos en la variable.
             var subcategorias_filtrado = subcategorias.filter(({ nombre_subcategoria }, index) => !array_subcategorias.includes(nombre_subcategoria, index + 1));
 
+            //Se almacena en la constante el conjunto de datos con las subcategorías sin repeticiones.
             setSubcategorias(subcategorias_filtrado);
 
             // Si la respuesta es satisfactoria se ejecuta el código.
@@ -59,15 +74,6 @@ export default function VerProductos({ route, navigation }) {
         }
     }
 
-    // Función renderItem carga una Card con la información del producto.
-    // const renderItem = ({ item }) => (
-    //     // Se manda a llamar el componente ProductoCard y se configuran los valores iniciales.
-    //     <ProductoCard
-    //         item={item}
-    //         accionBoton={() => abrirProducto(item.id_producto)}
-    //     />
-    // );
-
     return (
         <>
             <TouchableOpacity style={{
@@ -82,6 +88,7 @@ export default function VerProductos({ route, navigation }) {
                     <FlatList
                         data={dataSubcategorias}
                         horizontal={false}
+                        contentContainerStyle={{ gap: 30 }}
                         renderItem={({ item }) => (
                             <View style={{ gap: 20, width: Dimensions.get('window').width }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start' }}>
@@ -90,10 +97,11 @@ export default function VerProductos({ route, navigation }) {
                                 <FlatList
                                     data={dataProductos.filter((row) => { if (row.nombre_sub_categoria == item.nombre_subcategoria) { return row } })}
                                     horizontal={true}
+                                    contentContainerStyle={{ gap: 20, paddingRight: 40 }}
                                     renderItem={({ item }) => (
-                                        <View style={{ backgroundColor: '#3E88DE', marginRight: 20, borderRadius: 15, height: Dimensions.get('window').height / 5, width: Dimensions.get('window').width / 1.4, flexDirection: 'row', padding: 15 }}>
+                                        <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, height: Dimensions.get('window').height / 5, width: Dimensions.get('window').width / 1.3, flexDirection: 'row', padding: 15 }}>
                                             <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 100, height: 100, borderRadius: 15, alignSelf: 'center' }} />
-                                            <View style={{ alignItems: 'center', flex: 1, gap: 10 }}>
+                                            <View style={{ alignItems: 'center', flex: 1, gap: 10, display: 'flex' }}>
                                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
                                                     {item.nombre_producto}
                                                 </Text>
@@ -102,6 +110,7 @@ export default function VerProductos({ route, navigation }) {
                                                 <SimpleButton
                                                     textoBoton={'Ver producto'}
                                                     colorBoton={'#8ab5e7'}
+                                                    accionBoton={() => abrirProducto(item.id_producto)}
                                                 />
                                             </View>
                                         </View>
@@ -130,17 +139,4 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         padding: 20
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'left',
-        width: Dimensions.get('window').width,
-        marginLeft: Dimensions.get('window').width / 10,
-        flex: 0.1,
-        color: '#000', // Brown color for the title
-    },
-    titleAddress: {
-        marginTop: 20,
-        fontSize: 17,
-    }
 });

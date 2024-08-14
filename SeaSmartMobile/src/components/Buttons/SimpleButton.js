@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView  } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView, Dimensions  } from 'react-native';
 import { useState } from 'react';
 export default function SimpleButton({ textoBoton, accionBoton, colorBoton, colorTexto }) {
 
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         padding: 10,
         marginVertical: 5,
+        width: '80%'
     },
     buttonText: {
         textAlign: 'center',
