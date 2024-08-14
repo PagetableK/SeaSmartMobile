@@ -3,7 +3,7 @@ import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Aler
 import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
 
-const ModalCompra = ({ visible, cerrarModal, infoProducto, detallesProducto, cantidad, setCantidad }) => {
+const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
     const ip = Constantes.IP;
 
@@ -16,6 +16,12 @@ const ModalCompra = ({ visible, cerrarModal, infoProducto, detallesProducto, can
     }
 
     const handleAgregarDetalle = async () => {
+        // Se configura el valor de la constante.
+        const existencias = data[].existencias;
+
+        const precioProducto = data[0].precio_producto;
+
+        // const 
         try {
             if (existencias == 0) {
                 alert('El producto no se encuentra disponible');
@@ -75,40 +81,76 @@ const ModalCompra = ({ visible, cerrarModal, infoProducto, detallesProducto, can
 
     // La función useEffect se ejecuta cada vez que se carga la pantalla.
     useEffect(() => {
-        
-        console.log('bbb');
     }, []);
 
     return (
-        <Modal
-            visible={visible}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={() => {
-                cerrarModal(!visible);
-            }}
-        >
-            <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPress={() => cerrarModal(!visible)}>
-                <TouchableOpacity style={styles.modalView} activeOpacity={1}>
-                    <Text style={styles.modalText}>{infoProducto.nombre_producto}</Text>
-                    <View style={styles.containerCantidad}>
-                        <Text style={styles.modalText}>Cantidad:</Text>
-                        <View style={styles.containerCantidad}>
-                            <TouchableOpacity onPress={() => cambiarCantidad(-1)}>
-                                <Image source={require('../../../assets/minus.png')} style={styles.image} />
-                            </TouchableOpacity>
-                            <Text style={styles.textoCantidad}>{cantidad}</Text>
-                            <TouchableOpacity onPress={() => cambiarCantidad(+1)}>
-                                <Image source={require('../../../assets/plus.png')} style={styles.image} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <SimpleButton
-                        textoBoton='Agregar al carrito'
-                        accionBoton={() => handleAgregarDetalle()} />
-                </TouchableOpacity>
-            </TouchableOpacity>
-        </Modal>
+        <>
+            {
+                data[2] && data[3] ?
+                    <Modal
+                        visible={visible}
+                        animationType="slide"
+                        transparent={true}
+                        onRequestClose={() => {
+                            cerrarModal(!visible);
+                        }}
+                    >
+
+                    </Modal>
+                    : data[2] && !data[3] ?
+                        <Modal
+                            visible={visible}
+                            animationType="slide"
+                            transparent={true}
+                            onRequestClose={() => {
+                                cerrarModal(!visible);
+                            }}
+                        >
+
+                        </Modal>
+                        : !data[2] && data[3] ?
+                            <Modal
+                                visible={visible}
+                                animationType="slide"
+                                transparent={true}
+                                onRequestClose={() => {
+                                    cerrarModal(!visible);
+                                }}
+                            >
+
+                            </Modal>
+                            :
+                            <Modal
+                                visible={visible}
+                                animationType="slide"
+                                transparent={true}
+                                onRequestClose={() => {
+                                    cerrarModal(!visible);
+                                }}
+                            >
+                                <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPress={() => cerrarModal(!visible)}>
+                                    <TouchableOpacity style={styles.modalView} activeOpacity={1}>
+                                        <Text style={styles.modalText}>{data[0].nombre_producto}</Text>
+                                        <View style={styles.containerCantidad}>
+                                            <Text style={styles.modalText}>Cantidad:</Text>
+                                            <View style={styles.containerCantidad}>
+                                                <TouchableOpacity onPress={() => cambiarCantidad(-1)}>
+                                                    <Image source={require('../../../assets/minus.png')} style={styles.image} />
+                                                </TouchableOpacity>
+                                                <Text style={styles.textoCantidad}>{cantidad}</Text>
+                                                <TouchableOpacity onPress={() => cambiarCantidad(+1)}>
+                                                    <Image source={require('../../../assets/plus.png')} style={styles.image} />
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                        <SimpleButton
+                                            textoBoton='Agregar al carrito'
+                                            accionBoton={() => handleAgregarDetalle()} />
+                                    </TouchableOpacity>
+                                </TouchableOpacity>
+                            </Modal>
+            }
+        </>
     );
 };
 

@@ -21,7 +21,6 @@ Dependencias instaladas:
 * npm i @react-navigation/bottom-tabs
 * npm i @react-navigation/native
 * npm i @react-navigation/native-stack
-* npm i @react-navigation/stack
 * npm i react-native-masked-text
 * npm install react-native-paper
 * npm i react-native-vector-icons

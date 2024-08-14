@@ -20,14 +20,38 @@ export default function Producto({ route, navigation }) {
     useEffect(() => {
         // Se manda a llamar a la función para obtener la información del producto.
         getInfoProducto();
-    }, []);
+        getDetallesProducto();
+    }, [color, talla]);
 
     // La función getDetallesProducto carga los datos provenientes de la API dentro de la constante detallesProducto.
     const getDetallesProducto = async () => {
+        // Se inicializa la variable dónde se almacenará la url con la acción.
+        var url = '';
+        // Switchcase que verifica la opción de fetch a realizar.
+        switch (true) {
+            case color == true && talla == true:
+                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readDetailProduct`;
+                break;
+            case color == true && talla == false:
+                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readColorDetailProduct`;
+                break;
+            case color == false && talla == true:
+                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSizeDetailProduct`;
+                break;
+            case color == false && talla == false:
+                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSingleDetailProduct`;
+                break;
+        }
+
         try {
+            // Se inicializa la constante dónde se almacenará el id del producto.
+            const formData = new FormData();
+            // Se almacena el id del producto en la constante.
+            formData.append('idProducto', infoProducto.id_producto);
             // Se realiza la petición para obtener los detalles del producto.
-            const response = await fetch(`${ip}/SeaSmart/api/services/public/.php?action=readAll`, {
+            const response = await fetch(url, {
                 method: 'POST',
+                body: formData
             });
 
             // Se almacena la respuesta en la constante en formato JSON.
@@ -45,7 +69,7 @@ export default function Producto({ route, navigation }) {
             }
         } catch (error) {
             console.error(error, "Error desde Catch");
-            Alert.alert('Error', 'Ocurrió un error al cargar la información del producto');
+            Alert.alert('Error', 'Ocurrió un error al cargar los detalles del producto');
         }
     }
 
@@ -65,13 +89,14 @@ export default function Producto({ route, navigation }) {
             // Se almacena la respuesta en la constante en formato JSON.
             const data = await response.json();
 
-
-            console.log(data);
-
             // Si la respuesta es satisfactoria se ejecuta el código.
             if (data.status) {
                 // Se carga el conjunto de datos dentro la constante infoProducto.
                 setInfo(data.dataset);
+                // Se verifica si el producto tiene detalles de producto con color asignado.
+                data.dataset.colores > 0 ? setColor(true) : setColor(false);
+                // Se verifica si el producto tiene detalles de producto con talla asignada.
+                data.dataset.tallas > 0 ? setTalla(true) : setTalla(false);
             }
             // Si la respuesta no es satisfactoria se ejecuta el código.
             else {
@@ -89,8 +114,7 @@ export default function Producto({ route, navigation }) {
             <ModalCompra
                 visible={modalVisible}
                 cerrarModal={setModalVisible}
-                infoProducto={infoProducto}
-                detallesProducto={detallesProducto}
+                data={[infoProducto, detallesProducto, color, talla]}
                 cantidad={cantidadProducto}
                 setCantidad={setCantidadProducto}
             />
@@ -109,10 +133,14 @@ export default function Producto({ route, navigation }) {
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{infoProducto.nombre_producto}</Text>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#610707' }}>${infoProducto.precio_producto}</Text>
-                        <SimpleButton
-                            textoBoton={'Agregar al carrito'}
-                            accionBoton={() => setModalVisible(true)}
-                        />
+                        {infoProducto.existencias == 0 ?
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', }}>No disponible</Text>
+                            :
+                            <SimpleButton
+                                textoBoton={'Agregar al carrito'}
+                                accionBoton={() => setModalVisible(true)}
+                            />
+                        }
                     </View>
                 </View>
                 <View style={{}}>
