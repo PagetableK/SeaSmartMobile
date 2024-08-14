@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
-import Buttons from '../Buttons/Buttons';
+import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
 
 const ModalCompra = ({ visible, cerrarModal, nombreProductoModal, tallaProductoModal, idDetalleProductoModal, cantidad, setCantidad, existencias, precioProducto }) => {
@@ -98,7 +98,7 @@ const ModalCompra = ({ visible, cerrarModal, nombreProductoModal, tallaProductoM
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Buttons
+                    <SimpleButton
                         textoBoton='Agregar al carrito'
                         accionBoton={() => handleAgregarDetalle()} />
                 </TouchableOpacity>

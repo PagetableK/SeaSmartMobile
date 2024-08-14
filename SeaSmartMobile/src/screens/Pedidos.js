@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, Dimensions, TouchableOpacity } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
+// import Buttons from '../components/Buttons/Buttons';
 import * as Constantes from '../utils/Constantes';
 
 export default function Pedidos({ navigation }) {

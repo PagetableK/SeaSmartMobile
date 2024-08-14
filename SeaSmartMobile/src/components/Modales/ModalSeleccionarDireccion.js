@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, FlatList, Alert, ScrollView, Image, Modal } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../../utils/Constantes';
-import Buttons from '../Buttons/Buttons';
+import SimpleButton from '../Buttons/SimpleButton';
 import RNPickerSelect from 'react-native-picker-select';
 
 const ModalSeleccionarDireccion = ({ setModalVisible, modalVisible, finalizarPedido, dataDirecciones, setDireccion, direccion }) => {
@@ -30,7 +30,7 @@ const ModalSeleccionarDireccion = ({ setModalVisible, modalVisible, finalizarPed
                     onValueChange={(value)=>setDireccion(value)}
                     items={dataDirecciones.map( (item) => { return {value: item.direccion, label: item.direccion, key: item.direccion} })}
                     />
-                    <Buttons textoBoton={'Finalizar pedido'} accionBoton={() => finalizarPedido(direccion)}></Buttons>
+                    <SimpleButton textoBoton={'Finalizar pedido'} accionBoton={() => finalizarPedido(direccion)}/>
                 </TouchableOpacity>
             </TouchableOpacity>
         </Modal>

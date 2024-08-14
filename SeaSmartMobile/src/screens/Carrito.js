@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, FlatList, Dimensions } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Constantes from '../utils/Constantes';
 import ModalEditarCantidad from '../components/Modales/ModalEditarCantidad';
@@ -203,7 +203,7 @@ export default function Carrito({ navigation }) {
       {/* Botón de finalizar pedido */}
       <View>
         {dataDetalleCarrito.length > 0 && (
-          <Buttons
+          <SimpleButton
             textoBoton='Finalizar Pedido'
             accionBoton={dataDirecciones.length > 0 ? (() => setModalDireccionVisible(true)) : (() => redirigirDirecciones())}
           />

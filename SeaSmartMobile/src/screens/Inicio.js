@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Alert, FlatList, Dimensions, SafeAreaView, Text, Image } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
-import { useFocusEffect } from '@react-navigation/native';
+import { CommonActions, useFocusEffect } from '@react-navigation/native';
 import ModalCompra from '../components/Modales/ModalCompra';
 import Constants from 'expo-constants';
 import * as Constantes from '../utils/Constantes';
+import SimpleButton from '../components/Buttons/SimpleButton';
 
 export default function Inicio({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -45,6 +45,15 @@ export default function Inicio({ navigation }) {
       Alert.alert('Error', toString(error));
     }
   };
+
+  const abrirCategoria = async (id, categoria) => {
+    navigation.getParent().dispatch(
+      CommonActions.navigate({
+        name: 'Productos',
+        params: { id: id, categoria: categoria },
+      }
+      ))
+  }
 
   // La acción useFocusEffect se ejecuta una vez que la pantalla se ha terminado de cargar (Similar a useEffect).
   useFocusEffect(
@@ -104,9 +113,11 @@ export default function Inicio({ navigation }) {
             <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, marginBottom: 20, padding: 20, gap: 10 }}>
               {/* <Buttons textoBoton={item.nombre_producto + " - " + item.color_producto + " - Talla: " + item.talla} accionBoton={() => abrirAgregar(item.id_detalle_producto, item.nombre_producto + "-" + item.color_producto, item.talla, item.existencia_producto, item.precio_producto)}>Agregar al carrito</Buttons> */}
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, width: Dimensions.get('window').width }}>{item.nombre_categoria}</Text>
-              <Image source={{ uri: `${ip}/SeaSmart/api/images/categorias/${item.imagen_categoria}` }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 15 }}/>
+              <Image source={{ uri: `${ip}/SeaSmart/api/images/categorias/${item.imagen_categoria}` }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 15 }} />
               <Text style={{ color: 'white', fontSize: 18, fontWeight: 'semibold', }}>{item.descripcion_categoria}</Text>
-              
+              <View style={{ alignSelf: 'center' }}>
+                <SimpleButton textoBoton={'Ver productos'} colorBoton={'#8ab5e7'} colorTexto={'#fff'} accionBoton={() => abrirCategoria(item.id_categoria, item.nombre_categoria)} />
+              </View>
             </View>
           )}
         />

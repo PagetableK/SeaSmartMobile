@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, FlatList, Alert, 
 import { TextInput, Button, Modal } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import * as Constantes from '../utils/Constantes';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import DireccionCard from '../components/Cards/DireccionCard';
 import ModalDirecciones from '../components/Modales/ModalDirecciones';
 
@@ -125,7 +125,7 @@ export default function Direcciones({ navigation }) {
 
             {/* Botón de finalizar pedido */}
             <View style={{}}>
-                <Buttons
+                <SimpleButton
                     textoBoton='Agregar dirección'
                     accionBoton={handleAgregarDireccion}
                 />

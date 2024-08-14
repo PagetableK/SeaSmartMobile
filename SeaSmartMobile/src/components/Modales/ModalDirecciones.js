@@ -1,6 +1,6 @@
 import { Text, Modal, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import Buttons from '../Buttons/Buttons';
+import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes';
 
 const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccion, setDireccion, getDirecciones, direccionVieja }) => {
@@ -137,8 +137,7 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
                     </TextInput>
 
                     {idDireccion == null ? (
-                        <Buttons textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion}>
-                        </Buttons>
+                        <SimpleButton textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion}/>
                     ) : (
                         <TouchableOpacity style={styles.button} onPress={handleUpdateDireccion}>
                             <Text style={styles.buttonText}>Actualizar dirección</Text>
