@@ -60,7 +60,7 @@ export default function Producto({ route, navigation }) {
             // Si la respuesta es satisfactoria se ejecuta el código.
             if (data.status) {
                 // Se carga el conjunto de datos dentro la constante detallesProducto.
-                (data.dataset);
+                setDetalleProducto(data.dataset);
             }
             // Si la respuesta no es satisfactoria se ejecuta el código.
             else {

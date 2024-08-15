@@ -16,8 +16,20 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
     }
 
     const handleAgregarDetalle = async () => {
+        // Se inicializa la variable dónde se almacenará la existencia de un detalle de producto.
+        var existencias = 0;
         // Se configura el valor de la constante.
-        const existencias = data[].existencias;
+        switch (true) {
+            case data[2] && data[3]:
+                break;
+            case !data[2] && data[3]:
+                break;
+            case data[2] && !data[3]:
+                break;
+            case !data[2] && !data[3]:
+                existencias = data[1].existencia_producto;
+                break;
+        }
 
         const precioProducto = data[0].precio_producto;
 
@@ -39,7 +51,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                 if (data_order.status) {
 
                     const formData = new FormData();
-                    formData.append('idDetalleProducto', idDetalleProductoModal);
+                    formData.append('idDetalleProducto', data[1].id_detalle_producto);
                     formData.append('cantidadRequerida', cantidad);
                     formData.append('precioProducto', precioProducto);
 
@@ -66,7 +78,10 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         } else {
                             Alert.alert('Error', data.error);
                         }
-                    } else {
+                    } else if(data_product_order.error == "El detalle del producto ya ha sido agregado al carrito"){
+                        Alert.alert('No se puede agregar el producto al carrito', 'El producto ya ha sido agregado al carrito');
+                    } 
+                    else {
                         Alert.alert('Error', data_product_order.error);
                     }
                 } else {
