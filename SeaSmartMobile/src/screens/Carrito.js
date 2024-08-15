@@ -63,7 +63,7 @@ export default function Carrito({ navigation }) {
   const getDetalleCarrito = async () => {
     try {
       // Se realiza la petición a la API para obtener los productos.
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/detalles_pedidos.php?action=readCart`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/pedido.php?action=readCart`, {
         method: 'GET',
       });
 
@@ -81,7 +81,7 @@ export default function Carrito({ navigation }) {
         console.log("No hay detalles del carrito disponibles")
       }
     } catch (error) {
-      console.error(error, "Error desde Catchb");
+      console.error(error, "Error desde Catch");
       Alert.alert('Error', 'Ocurrió un error al cargar los productos del carrito');
     }
   };
@@ -201,11 +201,12 @@ export default function Carrito({ navigation }) {
       )}
 
       {/* Botón de finalizar pedido */}
-      <View>
+      <View style={{ width: '80%' }}>
         {dataDetalleCarrito.length > 0 && (
           <SimpleButton
             textoBoton='Finalizar Pedido'
             accionBoton={dataDirecciones.length > 0 ? (() => setModalDireccionVisible(true)) : (() => redirigirDirecciones())}
+            anchoBoton={'100'}
           />
         )}
       </View>
@@ -219,7 +220,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingVertical: 10
   },
   title: {
     fontSize: 24,

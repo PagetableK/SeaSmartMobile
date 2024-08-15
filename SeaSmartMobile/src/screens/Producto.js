@@ -20,53 +20,13 @@ export default function Producto({ route, navigation }) {
     useEffect(() => {
         // Se manda a llamar a la función para obtener la información del producto.
         getInfoProducto();
-        getDetallesProducto();
+        // getDetallesProducto();
     }, [color, talla]);
 
     // La función getDetallesProducto carga los datos provenientes de la API dentro de la constante detallesProducto.
     const getDetallesProducto = async () => {
-        // Se inicializa la variable dónde se almacenará la url con la acción.
-        var url = '';
-        // Switchcase que verifica la opción de fetch a realizar.
-        switch (true) {
-            case color == true && talla == true:
-                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readDetailProduct`;
-                break;
-            case color == true && talla == false:
-                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readColorDetailProduct`;
-                break;
-            case color == false && talla == true:
-                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSizeDetailProduct`;
-                break;
-            case color == false && talla == false:
-                url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSingleDetailProduct`;
-                break;
-        }
 
         try {
-            // Se inicializa la constante dónde se almacenará el id del producto.
-            const formData = new FormData();
-            // Se almacena el id del producto en la constante.
-            formData.append('idProducto', infoProducto.id_producto);
-            // Se realiza la petición para obtener los detalles del producto.
-            const response = await fetch(url, {
-                method: 'POST',
-                body: formData
-            });
-
-            // Se almacena la respuesta en la constante en formato JSON.
-            const data = await response.json();
-
-            // Si la respuesta es satisfactoria se ejecuta el código.
-            if (data.status) {
-                // Se carga el conjunto de datos dentro la constante detallesProducto.
-                setDetalleProducto(data.dataset);
-            }
-            // Si la respuesta no es satisfactoria se ejecuta el código.
-            else {
-                // Se muestra el mensaje en consola.
-                console.log("No hay existencias disponibles")
-            }
         } catch (error) {
             console.error(error, "Error desde Catch");
             Alert.alert('Error', 'Ocurrió un error al cargar los detalles del producto');
@@ -93,10 +53,55 @@ export default function Producto({ route, navigation }) {
             if (data.status) {
                 // Se carga el conjunto de datos dentro la constante infoProducto.
                 setInfo(data.dataset);
+                
                 // Se verifica si el producto tiene detalles de producto con color asignado.
                 data.dataset.colores > 0 ? setColor(true) : setColor(false);
                 // Se verifica si el producto tiene detalles de producto con talla asignada.
                 data.dataset.tallas > 0 ? setTalla(true) : setTalla(false);
+
+                /*PETICIÓN PARA OBTENER LOS DETALLES DEL PRODUCTO*/
+
+                // Se inicializa la variable dónde se almacenará la url con la acción.
+                var url = '';
+                // Switchcase que verifica la opción de fetch a realizar.
+                switch (true) {
+                    case color == true && talla == true:
+                        url = `${ip}/SeaSmart/api/services/public/productos.php?action=readDetailProduct`;
+                        break;
+                    case color == true && talla == false:
+                        url = `${ip}/SeaSmart/api/services/public/productos.php?action=readColorDetailProduct`;
+                        break;
+                    case color == false && talla == true:
+                        url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSizeDetailProduct`;
+                        break;
+                    case color == false && talla == false:
+                        url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSingleDetailProduct`;
+                        break;
+                }
+
+                // Se inicializa la constante dónde se almacenará el id del producto.
+                const form = new FormData();
+                // Se almacena el id del producto en la constante.
+                form.append('idProducto', data.dataset.id_producto);
+                // Se realiza la petición para obtener los detalles del producto.
+                const response_detalle = await fetch(url, {
+                    method: 'POST',
+                    body: form
+                });
+
+                // Se almacena la respuesta en la constante en formato JSON.
+                const data_detalle = await response_detalle.json();
+
+                // Si la respuesta es satisfactoria se ejecuta el código.
+                if (data_detalle.status) {
+                    // Se carga el conjunto de datos dentro la constante detallesProducto.
+                    setDetalleProducto(data_detalle.dataset);
+                }
+                // Si la respuesta no es satisfactoria se ejecuta el código.
+                else {
+                    // Se muestra el mensaje en consola.
+                    console.log("No hay existencias disponibles")
+                }
             }
             // Si la respuesta no es satisfactoria se ejecuta el código.
             else {

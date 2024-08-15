@@ -103,14 +103,15 @@ export default function Inicio({ navigation }) {
         <FlatList
           data={categorias}
           horizontal={false}
+          contentContainerStyle={{ gap: 10, paddingVertical: 5 }}
           renderItem={({ item }) => (
-            <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, marginBottom: 20, padding: 20, gap: 10 }}>
+            <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, padding: 20, gap: 10 }}>
               {/* <Buttons textoBoton={item.nombre_producto + " - " + item.color_producto + " - Talla: " + item.talla} accionBoton={() => abrirAgregar(item.id_detalle_producto, item.nombre_producto + "-" + item.color_producto, item.talla, item.existencia_producto, item.precio_producto)}>Agregar al carrito</Buttons> */}
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, width: Dimensions.get('window').width }}>{item.nombre_categoria}</Text>
               <Image source={{ uri: `${ip}/SeaSmart/api/images/categorias/${item.imagen_categoria}` }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 15 }} />
               <Text style={{ color: 'white', fontSize: 18, fontWeight: 'semibold', }}>{item.descripcion_categoria}</Text>
               <View style={{ alignSelf: 'center', width: '100%', alignItems: 'center' }}>
-                <SimpleButton textoBoton={'Ver productos'} colorBoton={'#8ab5e7'} colorTexto={'#fff'} accionBoton={() => abrirCategoria(item.id_categoria, item.nombre_categoria)} />
+                <SimpleButton textoBoton={'Ver productos'} colorBoton={'#8ab5e7'} colorTexto={'#fff'} anchoBoton={'100'} accionBoton={() => abrirCategoria(item.id_categoria, item.nombre_categoria)} />
               </View>
             </View>
           )}
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 20
   },
   searchContainer: {

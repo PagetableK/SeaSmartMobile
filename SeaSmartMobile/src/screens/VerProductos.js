@@ -101,7 +101,7 @@ export default function VerProductos({ route, navigation }) {
                                     renderItem={({ item }) => (
                                         <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, height: Dimensions.get('window').height / 5, width: Dimensions.get('window').width / 1.3, flexDirection: 'row', padding: 15 }}>
                                             <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 100, height: 100, borderRadius: 15, alignSelf: 'center' }} />
-                                            <View style={{ alignItems: 'center', flex: 1, gap: 10, display: 'flex' }}>
+                                            <View style={{ alignItems: 'center', flex: 1, gap: 10, display: 'flex', }}>
                                                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
                                                     {item.nombre_producto}
                                                 </Text>

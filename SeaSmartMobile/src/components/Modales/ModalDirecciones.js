@@ -137,11 +137,9 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
                     </TextInput>
 
                     {idDireccion == null ? (
-                        <SimpleButton textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion}/>
+                        <SimpleButton textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion} anchoBoton={'100'}/>
                     ) : (
-                        <TouchableOpacity style={styles.button} onPress={handleUpdateDireccion}>
-                            <Text style={styles.buttonText}>Actualizar dirección</Text>
-                        </TouchableOpacity>
+                        <SimpleButton accionBoton={handleUpdateDireccion} textoBoton={'Actualizar Dirección'} anchoBoton={'100'} colorBoton={'#5CB85C'}/>
                     )}
 
                 </TouchableOpacity>
@@ -171,6 +169,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        width: '90%'
     },
     input: {
         borderColor: '#ccc',
@@ -178,7 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         marginBottom: 20,
-        width: Dimensions.get('window').width / 1.2,
+        width: '100%',
     },
     button: {
         borderWidth: 1,

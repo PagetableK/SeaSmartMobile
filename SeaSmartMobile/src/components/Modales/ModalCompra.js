@@ -33,7 +33,6 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
         const precioProducto = data[0].precio_producto;
 
-        // const 
         try {
             if (existencias == 0) {
                 alert('El producto no se encuentra disponible');
@@ -78,9 +77,9 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         } else {
                             Alert.alert('Error', data.error);
                         }
-                    } else if(data_product_order.error == "El detalle del producto ya ha sido agregado al carrito"){
+                    } else if (data_product_order.error == "El detalle del producto ya ha sido agregado al carrito") {
                         Alert.alert('No se puede agregar el producto al carrito', 'El producto ya ha sido agregado al carrito');
-                    } 
+                    }
                     else {
                         Alert.alert('Error', data_product_order.error);
                     }
@@ -160,7 +159,9 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                         </View>
                                         <SimpleButton
                                             textoBoton='Agregar al carrito'
-                                            accionBoton={() => handleAgregarDetalle()} />
+                                            accionBoton={() => handleAgregarDetalle()}
+                                            anchoBoton={'100'}
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
                             </Modal>
@@ -185,9 +186,11 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2,
         },
+        width: '90%',
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        gap: 10
     },
     modalText: {
         marginBottom: 10,
