@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
+import RNPickerSelect from 'react-native-picker-select';
 
 const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
     const ip = Constantes.IP;
+    const [color, setColor] = useState(0);
 
     const cambiarCantidad = (operacion) => {
         if (operacion == -1 && cantidad > 1) {
@@ -25,6 +27,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             case !data[2] && data[3]:
                 break;
             case data[2] && !data[3]:
+                existencias = data[1].existencia_producto;
                 break;
             case !data[2] && !data[3]:
                 existencias = data[1].existencia_producto;
@@ -68,8 +71,6 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         });
 
                         const data = await response.json();
-
-                        console.log("data despues del response", data);
 
                         if (data.status) {
                             Alert.alert('Producto agregado al carrito');
@@ -120,7 +121,37 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                 cerrarModal(!visible);
                             }}
                         >
-
+                            <TouchableOpacity style={styles.centeredView} activeOpacity={1} onPress={() => cerrarModal(!visible)}>
+                                <TouchableOpacity style={styles.modalView} activeOpacity={1}>
+                                    <Text style={styles.modalText}>{data[0].nombre_producto}</Text>
+                                    <RNPickerSelect
+                                        placeholder={{
+                                            label: 'Seleccione un color',
+                                            value: null,
+                                            color: '#000'
+                                        }}
+                                        onValueChange={(value) => setColor(value)}
+                                        items={data[1].filter((row) => { return row.color_producto }).map((item) => { return { value: item.id_producto_color, label: item.color_producto, key: item.color_producto } })}
+                                    />
+                                    <View style={styles.containerCantidad}>
+                                        <Text style={styles.modalText}>Cantidad:</Text>
+                                        <View style={styles.containerCantidad}>
+                                            <TouchableOpacity onPress={() => cambiarCantidad(-1)}>
+                                                <Image source={require('../../../assets/minus.png')} style={styles.image} />
+                                            </TouchableOpacity>
+                                            <Text style={styles.textoCantidad}>{cantidad}</Text>
+                                            <TouchableOpacity onPress={() => cambiarCantidad(+1)}>
+                                                <Image source={require('../../../assets/plus.png')} style={styles.image} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <SimpleButton
+                                        textoBoton='Agregar al carrito'
+                                        accionBoton={() => handleAgregarDetalle()}
+                                        anchoBoton={'100'}
+                                    />
+                                </TouchableOpacity>
+                            </TouchableOpacity>
                         </Modal>
                         : !data[2] && data[3] ?
                             <Modal

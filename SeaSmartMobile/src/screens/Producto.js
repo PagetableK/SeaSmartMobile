@@ -23,16 +23,6 @@ export default function Producto({ route, navigation }) {
         // getDetallesProducto();
     }, [color, talla]);
 
-    // La función getDetallesProducto carga los datos provenientes de la API dentro de la constante detallesProducto.
-    const getDetallesProducto = async () => {
-
-        try {
-        } catch (error) {
-            console.error(error, "Error desde Catch");
-            Alert.alert('Error', 'Ocurrió un error al cargar los detalles del producto');
-        }
-    }
-
     // La función getInfoProducto carga los datos provenientes de la API dentro de la constante infoProducto.
     const getInfoProducto = async () => {
         try {
@@ -92,6 +82,10 @@ export default function Producto({ route, navigation }) {
                 // Se almacena la respuesta en la constante en formato JSON.
                 const data_detalle = await response_detalle.json();
 
+                console.log(data_detalle);
+
+                console.log(data_detalle.dataset.filter((row) => { return row.color_producto }).map((item) => { return { value: item.id_producto_color, label: item.color_producto, key: item.color_producto } }));
+
                 // Si la respuesta es satisfactoria se ejecuta el código.
                 if (data_detalle.status) {
                     // Se carga el conjunto de datos dentro la constante detallesProducto.
@@ -100,13 +94,13 @@ export default function Producto({ route, navigation }) {
                 // Si la respuesta no es satisfactoria se ejecuta el código.
                 else {
                     // Se muestra el mensaje en consola.
-                    console.log("No hay existencias disponibles")
+                    console.log("No hay existencias disponiblesa")
                 }
             }
             // Si la respuesta no es satisfactoria se ejecuta el código.
             else {
                 // Se muestra el mensaje en consola.
-                console.log("No hay existencias disponibles")
+                console.log("No hay existencias disponiblesb")
             }
         } catch (error) {
             console.error(error, "Error desde Catch");
