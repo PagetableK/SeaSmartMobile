@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const PedidoCard = () => {
+const PedidoCard = ({ direccion, estado_pedido, fecha_pedido, precio_total, onPressVerDetalles, id_pedido }) => {
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Pedido</Text>
-      <Text style={styles.text}><Text style={styles.label}>Estado:</Text> En camino</Text>
-      <Text style={styles.text}><Text style={styles.label}>Dirección:</Text> Calle Avenida 24D</Text>
-      <Text style={styles.text}><Text style={styles.label}>Total de pedido:</Text> $12.00</Text>
-      <TouchableOpacity style={styles.button}>
+      <Text style={styles.title}>Pedido - {fecha_pedido}</Text>
+      <Text style={styles.text}><Text style={styles.label}>Estado:</Text> {estado_pedido}</Text>
+      <Text style={styles.text}><Text style={styles.label}>Dirección:</Text> {direccion}</Text>
+      <Text style={styles.text}><Text style={styles.label}>Total de pedido:</Text> ${precio_total}</Text>
+      <TouchableOpacity style={styles.button} onPress={() => onPressVerDetalles(id_pedido)}>
         <Text style={styles.buttonText}>Ver detalles</Text>
       </TouchableOpacity>
     </View>
   );
-};
+}; 
 
 const styles = StyleSheet.create({
   card: {
@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10,
-    backgroundColor: 'green',
+    backgroundColor: '#92DCF1',
     paddingVertical: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffff',
     fontSize: 16,
     fontWeight: 'bold',
   },

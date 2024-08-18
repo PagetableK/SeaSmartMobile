@@ -9,6 +9,7 @@ import Productos from './src/screens/Productos.js';
 import Direcciones from './src/screens/Direcciones.js'
 import TabNavigator from './src/navigation/TabNavigator.js';
 import NavStack from './src/navigation/NavStack';
+import DetallesPedido from './src/screens/DetallesPedidos.js';
 
 export default function App() {
 
@@ -52,6 +53,7 @@ export default function App() {
           <Stack.Screen name="Registro" component={Registro} />
           <Stack.Screen name="Direcciones" component={Direcciones} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          <Stack.Screen name="DetallePedido" component={DetallesPedido} />
         </Stack.Navigator>) : 
         // Si la aplicación no está lista, muestra el componente NavStack
         (<NavStack />)}
