@@ -190,6 +190,7 @@ export default function Carrito({ navigation }) {
         <FlatList
           data={dataDetalleCarrito}
           renderItem={renderItem}
+          contentContainerStyle={{ borderRadius: 20 }}
           style={{ width: Dimensions.get('window').width / 1.1, flex: 2 }}
           keyExtractor={(item) => item.id_detalle_producto.toString()}
         />
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   title: {
     fontSize: 24,
