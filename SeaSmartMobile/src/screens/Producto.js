@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import ModalCompra from '../components/Modales/ModalCompra';
+import ModalComentario from '../components/Modales/ModalComentario';
 
 export default function Producto({ route, navigation }) {
 
@@ -12,14 +13,19 @@ export default function Producto({ route, navigation }) {
     const [infoProducto, setInfo] = useState([]);
     const [detallesProducto, setDetalleProducto] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalComentarioVisible, setModalComentarioVisible] = useState(false);
     const [cantidadProducto, setCantidadProducto] = useState(1);
     const [color, setColor] = useState(false);
     const [talla, setTalla] = useState(false);
+    const [comentarios, setComentarios] = useState([]);
+    const [estadoComentario, setEstadoComentario] = useState(false);
 
     // La función useEffect se ejecuta cada vez que se carga la pantalla.
     useEffect(() => {
         // Se manda a llamar a la función para obtener la información del producto.
         getInfoProducto();
+        // Se manda a llamar a la función para obtener los comentarios del producto.
+        getCalificaciones();
     }, [color, talla]);
 
     // La función getInfoProducto carga los datos provenientes de la API dentro de la constante infoProducto.
@@ -80,7 +86,7 @@ export default function Producto({ route, navigation }) {
 
                 // Se almacena la respuesta en la constante en formato JSON.
                 const data_detalle = await response_detalle.json();
-                
+
                 // Si la respuesta es satisfactoria se ejecuta el código.
                 if (data_detalle.status) {
                     // Se carga el conjunto de datos dentro la constante detallesProducto.
@@ -112,7 +118,7 @@ export default function Producto({ route, navigation }) {
             // Se almacena el id de producto en el form.
             formData.append('idProducto', route.params.id);
             // Se realiza la petición para obtener las calificaciones del producto.
-            const response = await fetch(`${ip}/SeaSmart/api/services/public/productos.php?action=`, {
+            const response = await fetch(`${ip}/SeaSmart/api/services/public/valoracion.php?action=readComments`, {
                 method: 'POST',
                 body: formData
             });
@@ -122,9 +128,8 @@ export default function Producto({ route, navigation }) {
 
             // Si la respuesta es satisfactoria se ejecuta el código.
             if (data.status) {
-                
-            } else{
-
+                // Se configura el valor de la constante.
+                setComentarios(data.dataset);
             }
         } catch (error) {
             console.error(error, "Error desde Catch");
@@ -141,35 +146,89 @@ export default function Producto({ route, navigation }) {
                 cantidad={cantidadProducto}
                 setCantidad={setCantidadProducto}
             />
+            <ModalComentario
+                visible={modalComentarioVisible}
+                cerrarModal={setModalComentarioVisible}
+                data={infoProducto}
+                setEstado={setEstadoComentario}
+            />
             <TouchableOpacity style={{
                 display: 'flex', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width, marginLeft: Dimensions.get('window').width / 20, marginTop: Dimensions.get('window').height / 40, marginBottom: 20, gap: 10
             }} onPress={() => navigation.goBack()}>
                 <Image source={require('../../assets/flecha_regreso.png')} style={{ height: 35, width: 35 }} />
                 <Text style={{ fontSize: 20 }}>Regresar</Text>
             </TouchableOpacity>
-            <View style={styles.container}>
-                {/* Información del producto */}
-                <View style={{ width: Dimensions.get('window').width, flexDirection: 'row', display: 'flex', paddingHorizontal: 15, }}>
-                    <View style={{ alignItems: 'center' }}>
-                        <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + infoProducto.imagen_producto }} style={{ width: 175, height: 175, borderRadius: 15 }} />
+            <View style={[styles.container, {}]}>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    {/* Información del producto */}
+                    <View style={{ width: Dimensions.get('window').width, flexDirection: 'row', display: 'flex', paddingHorizontal: 15, }}>
+                        <View style={{ alignItems: 'center' }}>
+                            <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + infoProducto.imagen_producto }} style={{ width: 175, height: 175, borderRadius: 15 }} />
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{infoProducto.nombre_producto}</Text>
+                            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#610707' }}>${infoProducto.precio_producto}</Text>
+                            {infoProducto.existencias == 0 ?
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', }}>No disponible</Text>
+                                :
+                                <SimpleButton
+                                    textoBoton={'Agregar al carrito'}
+                                    accionBoton={() => setModalVisible(true)}
+                                />
+                            }
+                        </View>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{infoProducto.nombre_producto}</Text>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#610707' }}>${infoProducto.precio_producto}</Text>
-                        {infoProducto.existencias == 0 ?
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', }}>No disponible</Text>
-                            :
-                            <SimpleButton
-                                textoBoton={'Agregar al carrito'}
-                                accionBoton={() => setModalVisible(true)}
-                            />
+                    <View style={{}}>
+                        <Text style={{ fontSize: 18, fontWeight: 'semibold' }}>{infoProducto.descripcion_producto}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', width: '100%', paddingHorizontal: 5, justifyContent: 'space-between' }}>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', textAlign: 'left', alignSelf: 'flex-start' }}>Reseñas</Text>
+                        {
+                            infoProducto.compra_cliente && !estadoComentario
+                                && !infoProducto.valoraciones
+                                ?
+                                <SimpleButton textoBoton={'Escribir reseña'} colorBoton={'#fddc5c'} colorTexto={'black'} anchoBoton={'70'} accionBoton={() => setModalComentarioVisible(true)} />
+                                : ''
                         }
                     </View>
-                </View>
-                <View style={{}}>
-                    <Text style={{ fontSize: 18, fontWeight: 'semibold' }}>{infoProducto.descripcion_producto}</Text>
-
-                </View>
+                    <View style={{}}>
+                        {
+                            comentarios.length > 0 ?
+                                <FlatList
+                                    data={comentarios}
+                                    scrollEnabled={false}
+                                    contentContainerStyle={{ gap: 10, }}
+                                    renderItem={({ item }) => (
+                                        <View style={{ gap: 10 }}>
+                                            <View
+                                                style={{
+                                                    borderBottomColor: 'black',
+                                                    borderBottomWidth: 2,
+                                                }}
+                                            />
+                                            <View style={{ flexDirection: 'row', gap: 10, }}>
+                                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                                                        <Text style={{ fontWeight: 'bold', fontSize: 40 }}>{item.calificacion_producto}</Text>
+                                                        <Image
+                                                            style={{ width: 40, height: 40 }}
+                                                            source={require('../../assets/estrella_fill.png')}
+                                                        />
+                                                    </View>
+                                                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black' }}>Calificación</Text>
+                                                </View>
+                                                <View style={{ alignItems: 'center', gap: 10, flexDirection: 'column' }}>
+                                                    <Text style={{ fontSize: 18, fontWeight: '500', color: 'black' }}>{item.nombre_cliente} {item.apellido_cliente}</Text>
+                                                    <Text numberOfLines={100} style={{ fontSize: 17, color: 'black', alignSelf: 'center', width: Dimensions.get('window').width / 1.5 }}>{item.comentario_producto}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    )}
+                                />
+                                : <Text style={{ fontWeight: 'bold', fontSize: 18 }}>Este producto no tiene reseñas</Text>
+                        }
+                    </View>
+                </ScrollView>
             </View>
         </>
     );
@@ -178,10 +237,12 @@ export default function Producto({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    scrollContainer: {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        padding: 20,
-        gap: 30
-    },
+        gap: 30,
+        padding: 5,
+    }
 });

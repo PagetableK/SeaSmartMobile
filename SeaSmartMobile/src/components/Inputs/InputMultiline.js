@@ -1,7 +1,8 @@
 
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { TextInput } from 'react-native-paper';
 
-export default function InputMultiline({ placeHolder, setValor, contra, valor }) {
+export default function InputMultiline({ placeHolder, setValor, valor }) {
 
   return (
 
@@ -11,9 +12,14 @@ export default function InputMultiline({ placeHolder, setValor, contra, valor })
       value={valor}
       onChangeText={setValor}
       placeholderTextColor={'#090A0A'}
-      secureTextEntry={contra}
       multiline={true}
       numberOfLines={4}
+      maxLength={200}
+      theme={{
+          colors: {
+              primary: '#4593EE'
+          },
+      }}
     />
 
   );
@@ -22,11 +28,8 @@ export default function InputMultiline({ placeHolder, setValor, contra, valor })
 const styles = StyleSheet.create({
   Input: {
     backgroundColor: '#FFF',
-    color: "#090A0A", fontWeight: '800',
-    width: 300,
-    borderRadius: 5,
-    padding: 5,
-    marginVertical: 10
+    color: "black",
+    width: '100%'
   },
 
 });

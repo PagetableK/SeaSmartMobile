@@ -30,7 +30,7 @@ const ModalSeleccionarDireccion = ({ setModalVisible, modalVisible, finalizarPed
                     onValueChange={(value)=>setDireccion(value)}
                     items={dataDirecciones.map( (item) => { return {value: item.direccion, label: item.direccion, key: item.direccion} })}
                     />
-                    <SimpleButton textoBoton={'Finalizar pedido'} accionBoton={() => finalizarPedido(direccion)}/>
+                    <SimpleButton textoBoton={'Finalizar pedido'} anchoBoton={'100'} accionBoton={() => finalizarPedido(direccion)}/>
                 </TouchableOpacity>
             </TouchableOpacity>
         </Modal>
@@ -58,5 +58,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        gap: 15,
+        width: '90%',
     },
 });

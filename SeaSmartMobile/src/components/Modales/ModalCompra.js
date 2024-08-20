@@ -94,21 +94,27 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             // Switch case para verificar información y configurar variables.
             switch (true) {
                 case data[2] && data[3]:
-
+                    // Se verifica que se haya seleccionado una talla y un color.
                     if (talla == 0) {
+                        // Se configura el valor de la variable.
                         error = 1;
+                        // Se muestra la advertencia.
                         Alert.alert('Seleccione una talla', 'Asegúrese de seleccionar una talla de la lista de opciones');
                     } else if (color == 0) {
+                        // Se configura el valor de la variable.
                         error = 1;
+                        // Se muestra la advertencia.
                         Alert.alert('Seleccione un color', 'Asegúrese de seleccionar un color de la lista de opciones');
                     } else {
-                        
+                        // Se almacena en la variable el conjunto de datos que cumple con la condición.
                         var data_detalle = data[1].filter(({ id_producto_color, id_producto_talla }) =>
                             id_producto_color == color && id_producto_talla == talla
                         );
-                        
+                        // Si configuran el valor de las variables.
                         existencias = data_detalle[0].existencia_producto;
                         idDetalle = data_detalle[0].id_detalle_producto;
+                        // Se restablece el valor de la variable.
+                        error = 0;
                     }
                     break;
                 case !data[2] && data[3]:
@@ -119,12 +125,12 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                             // Si la talla seleccionada coincide se almacena el id de detalle de producto en la variable y se configuran las existencias.
                             row.id_producto_talla == talla ? (idDetalle = row.id_detalle_producto, existencias = row.existencia_producto) : '';
                         });
+                        // Se restablece el valor de la variable.
+                        error = 0;
                     } else {
                         error = 1;
                         Alert.alert('Seleccione una talla', 'Asegúrese de seleccionar una talla de la lista de opciones');
                     }
-                    // Se restablece el valor de la variable.
-                    error = 0;
                     break;
                 case data[2] && !data[3]:
                     // Se verifica que el usuario haya seleccionado un color.
@@ -134,12 +140,12 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                             // Si el color seleccionado coincide se almacena el id de detalle de producto en la variable y se configuran las existencias.
                             row.id_producto_color == color ? (idDetalle = row.id_detalle_producto, existencias = row.existencia_producto) : '';
                         });
+                        // Se restablece el valor de la variable.
+                        error = 0;
                     } else {
                         error = 1;
                         Alert.alert('Seleccione un color', 'Asegúrese de seleccionar un color de la lista de opciones');
                     }
-                    // Se restablece el valor de la variable.
-                    error = 0;
                     break;
                 case !data[2] && !data[3]:
                     // Se asigna el valor del id del detalle de producto.
@@ -151,7 +157,10 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     break;
             }
 
-            if (existencias == 0 || !error) {
+            if (existencias == 0 || error) {
+
+                console.log('Existencias: '+existencias);
+                console.log(error);
                 Alert.alert('El producto no se encuentra disponible', 'Lo sentimos mucho');
             }
             else if (existencias < cantidad && !error) {
