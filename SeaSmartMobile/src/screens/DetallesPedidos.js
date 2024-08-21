@@ -57,7 +57,6 @@ export default function DetallesPedido({ route }) {
                         <Text style={styles.title}>Producto {index + 1}</Text>
                         <Text style={styles.detail}>Nombre: {detalle.nombre_producto}</Text>
                         <Text style={styles.detail}>Cantidad: {detalle.cantidad_producto}</Text>
-                        <Text style={styles.detail}>Fecha: {detalle.fecha_pedido}</Text>
                     </View>
                 ))}
             </ScrollView>
