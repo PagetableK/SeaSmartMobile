@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, FlatList, Dimensions } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Constantes from '../utils/Constantes';
 import ModalEditarCantidad from '../components/Modales/ModalEditarCantidad';
@@ -63,7 +63,7 @@ export default function Carrito({ navigation }) {
   const getDetalleCarrito = async () => {
     try {
       // Se realiza la petición a la API para obtener los productos.
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/detalles_pedidos.php?action=readCart`, {
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/pedido.php?action=readCart`, {
         method: 'GET',
       });
 
@@ -81,7 +81,7 @@ export default function Carrito({ navigation }) {
         console.log("No hay detalles del carrito disponibles")
       }
     } catch (error) {
-      console.error(error, "Error desde Catchb");
+      console.error(error, "Error desde Catch");
       Alert.alert('Error', 'Ocurrió un error al cargar los productos del carrito');
     }
   };
@@ -190,6 +190,7 @@ export default function Carrito({ navigation }) {
         <FlatList
           data={dataDetalleCarrito}
           renderItem={renderItem}
+          contentContainerStyle={{ borderRadius: 20 }}
           style={{ width: Dimensions.get('window').width / 1.1, flex: 2 }}
           keyExtractor={(item) => item.id_detalle_producto.toString()}
         />
@@ -201,11 +202,12 @@ export default function Carrito({ navigation }) {
       )}
 
       {/* Botón de finalizar pedido */}
-      <View>
+      <View style={{ width: '80%' }}>
         {dataDetalleCarrito.length > 0 && (
-          <Buttons
+          <SimpleButton
             textoBoton='Finalizar Pedido'
             accionBoton={dataDirecciones.length > 0 ? (() => setModalDireccionVisible(true)) : (() => redirigirDirecciones())}
+            anchoBoton={'100'}
           />
         )}
       </View>
@@ -219,7 +221,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingVertical: 10,
   },
   title: {
     fontSize: 24,

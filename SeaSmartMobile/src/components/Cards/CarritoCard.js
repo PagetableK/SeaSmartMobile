@@ -28,6 +28,7 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
                                 method: 'POST',
                                 body: formData
                             });
+                            console.log(idDetalleProducto + '-' + idDetallePedido);
                             const data = await response.json();
                             console.log(data);
                             if (data.status) {
@@ -56,8 +57,12 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
             </TouchableOpacity>
             <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 15 }}>{item.nombre_producto}</Text>
             <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 200, height: 200, alignSelf: 'center' }} />
-            <Text style={styles.itemText}>Talla: {item.talla}</Text>
-            <Text style={styles.itemText}>Color: {item.color_producto}</Text>
+            {item.talla_producto != 0 && 
+                <Text style={styles.itemText}>Talla: {item.talla_producto}</Text>
+            }
+            {item.color_producto != 0 && 
+                <Text style={styles.itemText}>Color: {item.color_producto}</Text>
+            }
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 20 }}>
                 <Text style={styles.itemText}>Cantidad: {item.cantidad_producto}</Text>
                 <TouchableOpacity

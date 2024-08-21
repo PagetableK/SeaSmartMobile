@@ -48,7 +48,7 @@ const DireccionCard = ({ item, accionBoton, updateDataDireccion }) => {
 
     return (
         <View style={styles.itemContainer}>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 5 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap: 5, }}>
                 <TouchableOpacity
                     onPress={() => accionBoton(item.id_direccion, item.direccion)}
                 >

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import * as Constantes from '../utils/Constantes';
+import Back from '../components/Buttons/Back';
 
 export default function DetallesPedido({ route }) {
     const { pedidoId } = route.params;
@@ -44,18 +45,17 @@ export default function DetallesPedido({ route }) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={24} color="#fff" />
-            </TouchableOpacity>
+            <Back
+                navigation={navigation}
+            />
             <View style={styles.container2}>
-                <Text style={styles.title}>Detalles de su pedido</Text>
+                <Text style={[styles.title, {fontSize: 20}]}>Detalles de su pedido</Text>
             </View>
             <ScrollView style={styles.scrollContainer}>
                 {pedido.map((detalle, index) => (
                     <View key={index} style={styles.card}>
                         <Text style={styles.title}>Producto {index + 1}</Text>
                         <Text style={styles.detail}>Nombre: {detalle.nombre_producto}</Text>
-                        <Text style={styles.detail}>Estado: {detalle.estado_pedido}</Text>
                         <Text style={styles.detail}>Cantidad: {detalle.cantidad_producto}</Text>
                     </View>
                 ))}
@@ -68,14 +68,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f7f7f7', // Color de fondo gris claro
-        paddingTop: 50,
+        paddingTop: 25,
+        paddingHorizontal: 10
     },
     container2: {
         alignItems: 'center', // Centrar horizontalmente
         marginVertical: 10, // Margen arriba y abajo para más separación
     },
     scrollContainer: {
-        paddingHorizontal: 20, // Padding horizontal para los lados
+        paddingHorizontal: 10, // Padding horizontal para los lados
         marginTop: -10, // Acerca las tarjetas al título
     },
     card: {
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
         color: '#92DCF1', // Texto celeste
