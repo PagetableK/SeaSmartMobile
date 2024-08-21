@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import * as Constantes from '../utils/Constantes';
 import PedidoCard from '../components/Cards/PedidosCard';
 
