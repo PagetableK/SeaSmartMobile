@@ -40,9 +40,9 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     setColoresDetalle(selectColores);
                     setTallasDetalle(selectTallas);
 
-                    selectTallas.length == 1 ? setTalla(selectTallas[0].value) : null ;
-                    
-                    selectColores.length == 1 ? setColor(selectColores[0].value) : null ;
+                    selectTallas.length == 1 ? setTalla(selectTallas[0].value) : null;
+
+                    selectColores.length == 1 ? setColor(selectColores[0].value) : null;
 
                     break;
                 case !data[2] && data[3]:
@@ -110,11 +110,17 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         var data_detalle = data[1].filter(({ id_producto_color, id_producto_talla }) =>
                             id_producto_color == color && id_producto_talla == talla
                         );
-                        // Si configuran el valor de las variables.
-                        existencias = data_detalle[0].existencia_producto;
-                        idDetalle = data_detalle[0].id_detalle_producto;
-                        // Se restablece el valor de la variable.
-                        error = 0;
+                        
+                        if (data_detalle.length == 0) {
+                            error = 1;
+                        } else {
+                            // Si configuran el valor de las variables.
+                            existencias = data_detalle[0].existencia_producto;
+                            idDetalle = data_detalle[0].id_detalle_producto;
+                            // Se restablece el valor de la variable.
+                            error = 0;
+                        }
+                        console.log(data_detalle.length);
                     }
                     break;
                 case !data[2] && data[3]:
@@ -159,7 +165,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
             if (existencias == 0 || error) {
 
-                console.log('Existencias: '+existencias);
+                console.log('Existencias: ' + existencias);
                 console.log(error);
                 Alert.alert('El producto no se encuentra disponible', 'Lo sentimos mucho');
             }

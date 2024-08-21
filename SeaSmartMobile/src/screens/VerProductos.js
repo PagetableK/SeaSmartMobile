@@ -5,6 +5,7 @@ import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import Constants from 'expo-constants';
 import { CommonActions } from '@react-navigation/native';
+import Back from '../components/Buttons/Back';
 
 export default function VerProductos({ route, navigation }) {
 
@@ -26,10 +27,10 @@ export default function VerProductos({ route, navigation }) {
         //     params: { id: id },
         //   }
         //   ))
-        
+
         navigation.navigate('Producto', {
             id: id,
-          });
+        });
     }
 
     // La función getProductos carga los datos provenientes de la API en relación con la categoría.
@@ -76,50 +77,56 @@ export default function VerProductos({ route, navigation }) {
 
     return (
         <>
-            <TouchableOpacity style={{
+            {/* <TouchableOpacity style={{
                 display: 'flex', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width, marginLeft: Dimensions.get('window').width / 20, marginTop: Dimensions.get('window').height / 40, marginBottom: 5, gap: 10
             }} onPress={() => navigation.goBack()}>
                 <Image source={require('../../assets/flecha_regreso.png')} style={{ height: 35, width: 35 }} />
                 <Text style={{ fontSize: 20 }}>Regresar</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={styles.container}>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', alignSelf: 'flex-start' }}>Productos de la categoría {route.params.categoria}</Text>
-                <SafeAreaView style={styles.containerFlat}>
-                    <FlatList
-                        data={dataSubcategorias}
-                        horizontal={false}
-                        contentContainerStyle={{ gap: 30 }}
-                        renderItem={({ item }) => (
-                            <View style={{ gap: 20, width: Dimensions.get('window').width }}>
-                                <Text style={{ fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start' }}>
-                                    {item.nombre_subcategoria}
-                                </Text>
-                                <FlatList
-                                    data={dataProductos.filter((row) => { if (row.nombre_sub_categoria == item.nombre_subcategoria) { return row } })}
-                                    horizontal={true}
-                                    contentContainerStyle={{ gap: 20, paddingRight: 40 }}
-                                    renderItem={({ item }) => (
-                                        <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, height: Dimensions.get('window').height / 5, width: Dimensions.get('window').width / 1.3, flexDirection: 'row', padding: 15 }}>
-                                            <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 100, height: 100, borderRadius: 15, alignSelf: 'center' }} />
-                                            <View style={{ alignItems: 'center', flex: 1, gap: 10, display: 'flex', }}>
-                                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
-                                                    {item.nombre_producto}
-                                                </Text>
-                                                <Text style={{ fontSize: 17, color: '#fff' }}>Precio: ${item.precio_producto}</Text>
-                                                <Text style={{ fontSize: 17, color: '#fff', fontWeight: 'bold' }}>{item.existencias > 0 ? 'Disponible' : 'No disponible'}</Text>
-                                                <SimpleButton
-                                                    textoBoton={'Ver producto'}
-                                                    colorBoton={'#8ab5e7'}
-                                                    accionBoton={() => abrirProducto(item.id_producto)}
-                                                />
-                                            </View>
-                                        </View>
-                                    )}
-                                />
-                            </View>
-                        )}
+                <ScrollView>
+                    <Back
+                        navigation={navigation}
                     />
-                </SafeAreaView>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', alignSelf: 'flex-start', marginTop: 5 }}>Productos de la categoría {route.params.categoria}</Text>
+                    <SafeAreaView style={styles.containerFlat}>
+                        <FlatList
+                            data={dataSubcategorias}
+                            horizontal={false}
+                            scrollEnabled={false}
+                            contentContainerStyle={{ gap: 30 }}
+                            renderItem={({ item }) => (
+                                <View style={{ gap: 20, width: Dimensions.get('window').width }}>
+                                    <Text style={{ fontSize: 18, fontWeight: 'bold', alignSelf: 'flex-start' }}>
+                                        {item.nombre_subcategoria}
+                                    </Text>
+                                    <FlatList
+                                        data={dataProductos.filter((row) => { if (row.nombre_sub_categoria == item.nombre_subcategoria) { return row } })}
+                                        horizontal={true}
+                                        contentContainerStyle={{ gap: 20, paddingRight: 40 }}
+                                        renderItem={({ item }) => (
+                                            <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, height: Dimensions.get('window').height / 5, width: Dimensions.get('window').width / 1.3, flexDirection: 'row', padding: 15 }}>
+                                                <Image source={{ uri: ip + '/SeaSmart/api/images/detalles_productos/' + item.imagen_producto }} style={{ width: 100, height: 100, borderRadius: 15, alignSelf: 'center' }} />
+                                                <View style={{ alignItems: 'center', flex: 1, gap: 10, display: 'flex', }}>
+                                                    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#fff' }}>
+                                                        {item.nombre_producto}
+                                                    </Text>
+                                                    <Text style={{ fontSize: 17, color: '#fff' }}>Precio: ${item.precio_producto}</Text>
+                                                    <Text style={{ fontSize: 17, color: '#fff', fontWeight: 'bold' }}>{item.existencias > 0 ? 'Disponible' : 'No disponible'}</Text>
+                                                    <SimpleButton
+                                                        textoBoton={'Ver producto'}
+                                                        colorBoton={'#8ab5e7'}
+                                                        accionBoton={() => abrirProducto(item.id_producto)}
+                                                    />
+                                                </View>
+                                            </View>
+                                        )}
+                                    />
+                                </View>
+                            )}
+                        />
+                    </SafeAreaView>
+                </ScrollView>
             </View>
         </>
     );
