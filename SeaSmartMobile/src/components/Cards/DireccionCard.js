@@ -28,7 +28,7 @@ const DireccionCard = ({ item, accionBoton, updateDataDireccion }) => {
                                 body: formData
                             });
                             const data = await response.json();
-                            console.log(data);
+                            
                             if (data.status) {
                                 Alert.alert('Dirección eliminada' , 'Dirección eliminada correctamente');
                                 // Llamar a la función de actualización para actualizar la lista

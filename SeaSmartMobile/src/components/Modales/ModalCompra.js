@@ -120,7 +120,6 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                             // Se restablece el valor de la variable.
                             error = 0;
                         }
-                        console.log(data_detalle.length);
                     }
                     break;
                 case !data[2] && data[3]:
@@ -164,8 +163,6 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             }
 
             if (existencias == 0 || error) {
-
-                console.log('Existencias: ' + existencias);
                 console.log(error);
                 Alert.alert('El producto no se encuentra disponible', 'Lo sentimos mucho');
             }

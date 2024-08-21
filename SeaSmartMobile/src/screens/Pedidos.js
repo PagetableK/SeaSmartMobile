@@ -16,7 +16,6 @@ export default function Pedidos({ navigation }) {
       const data = await response.json();
       if (data.status) {
         setProductos(data.dataset);
-        console.log(data.dataset);
       } else {
         console.log("No hay pedidos realizados por el cliente");
       }
@@ -49,21 +48,32 @@ export default function Pedidos({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-
+      <View
+        style={{
+          borderBottomColor: 'black',
+          borderBottomWidth: 2,
+          width: Dimensions.get('window').width / 1.1,
+        }}
+      />
       <View style={styles.container}>
-        <ScrollView style={{ paddingHorizontal: 10 }} contentContainerStyle={{ gap: 20, paddingVertical: 20 }}>
-          {productos.map((pedido, index) => (
-            <PedidoCard
-              key={index}
-              direccion={pedido.direccion}
-              estado_pedido={pedido.estado_pedido}
-              fecha_pedido={pedido.fecha_pedido}
-              precio_total={pedido.precio_total}
-              onPressVerDetalles={handleVerDetalles}
-              id_pedido={pedido.id_pedido}
-            />
-          ))}
-        </ScrollView>
+        {
+          productos.length == 0 ?
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 50 }}>No hay pedidos que mostrar</Text>
+            :
+            <ScrollView style={{ paddingHorizontal: 10 }} contentContainerStyle={{ gap: 20, paddingVertical: 20 }}>
+              {productos.map((pedido, index) => (
+                <PedidoCard
+                  key={index}
+                  direccion={pedido.direccion}
+                  estado_pedido={pedido.estado_pedido}
+                  fecha_pedido={pedido.fecha_pedido}
+                  precio_total={pedido.precio_total}
+                  onPressVerDetalles={handleVerDetalles}
+                  id_pedido={pedido.id_pedido}
+                />
+              ))}
+            </ScrollView>
+        }
       </View>
     </View>
   );

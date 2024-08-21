@@ -28,9 +28,9 @@ const CarritoCard = ({ item, accionBotonDetalle, updateDataDetalleCarrito }) => 
                                 method: 'POST',
                                 body: formData
                             });
-                            console.log(idDetalleProducto + '-' + idDetallePedido);
+                            
                             const data = await response.json();
-                            console.log(data);
+                            
                             if (data.status) {
                                 Alert.alert('Producto eliminado correctamente del carrito');
                                 // Llamar a la función de actualización para actualizar la lista

@@ -86,16 +86,16 @@ export default function Inicio({ navigation }) {
             <Text style={{ color: '#4593EE', fontSize: 20, fontWeight: 'bold' }}>mart</Text>
           </View>
         </View>
-        <Text style={styles.title2}>¡Bienvenido {usuario}!</Text>
+        <Text style={styles.title2}>¡Bienvenido/a {usuario}!</Text>
       </View>
 
-      {/* <View
+      <View
         style={{
           borderBottomColor: 'black',
           borderBottomWidth: 2,
           width: Dimensions.get('window').width / 1.1,
         }}
-      /> */}
+      />
 
       <Text style={{ fontWeight: 'bold', fontSize: 20, textAlign: 'left', width: Dimensions.get('window').width, paddingHorizontal: 30, marginTop: 20 }}>Categorías</Text>
 

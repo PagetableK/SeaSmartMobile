@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, TextInput, TouchableOpacity } from 'react-native';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import * as Constantes from '../utils/Constantes';
+import MaskedInputDui from '../components/Inputs/MaskedInputDui';
+import MaskedInputTelefono from '../components/Inputs/MaskedInputTelefono';
+import InputEmail from '../components/Inputs/InputEmail';
+import Input from '../components/Inputs/Input';
 
 export default function Perfil({ navigation }) {
   const [nombre, setNombre] = useState('');
@@ -112,62 +116,63 @@ export default function Perfil({ navigation }) {
       <Text style={styles.subtitle}>En este apartado podrás editar tu perfil</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Nombres: </Text>
-        <TextInput
-          style={styles.input}
-          value={nombre}
-          onChangeText={setNombre}
-          editable={isEditing}
+        <Input
+          placeHolder={'Nombre'}
+          setValor={nombre}
+          setTextChange={setNombre}
+          contra={false}
+          boolean={1}
+          isEditing={isEditing}
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Apellidos: </Text>
-        <TextInput
-          style={styles.input}
-          value={apellido}
-          onChangeText={setApellido}
-          editable={isEditing}
+        <Input
+          placeHolder={'Apellido'}
+          setValor={apellido}
+          setTextChange={setApellido}
+          contra={false}
+          boolean={1}
+          isEditing={isEditing}
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Correo: </Text>
-        <TextInput
-          style={styles.input}
-          value={correo}
-          onChangeText={setCorreo}
-          editable={isEditing}
+        <InputEmail
+          placeHolder={'Correo'}
+          setValor={correo}
+          setTextChange={setCorreo}
+          boolean={1}
+          isEditing={isEditing}
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>DUI: </Text>
-        <TextInput
-          style={styles.input}
-          value={dui}
-          onChangeText={setDui}
-          editable={isEditing}
+        <MaskedInputDui
+          dui={dui}
+          setDui={setDui}
+          boolean={1}
+          isEditing={isEditing}
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Teléfono móvil: </Text>
-        <TextInput
-          style={styles.input}
-          value={telefono}
-          onChangeText={setTelefono}
-          editable={isEditing}
+        <MaskedInputTelefono
+          telefono={telefono}
+          setTelefono={setTelefono}
+          boolean={1}
+          isEditing={isEditing}
+          placeholder={'Teléfono móvil'}
         />
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Teléfono fijo: </Text>
-        <TextInput
-          style={styles.input}
-          value={telefono_fijo}
-          onChangeText={setTelefono_Fijo}
-          editable={isEditing}
+        <MaskedInputTelefono
+          telefono={telefono_fijo}
+          setTelefono={setTelefono_Fijo}
+          boolean={1}
+          isEditing={isEditing}
+          placeholder={'Teléfono fijo'}
         />
       </View>
 
@@ -180,6 +185,7 @@ export default function Perfil({ navigation }) {
         <SimpleButton
         textoBoton='Editar perfil'
         accionBoton={handleEditToggle}
+        colorBoton={'#28a745'}
       />
       )}
 
@@ -193,10 +199,10 @@ export default function Perfil({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#F7F5F4',
     padding: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 10
   },
   title: {
     fontSize: 24,
@@ -213,15 +219,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 15,
-  },
-  label: {
-    flex: 1,
-    fontWeight: 'bold',
-  },
-  input: {
-    flex: 2,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-    padding: 5,
   },
 });
