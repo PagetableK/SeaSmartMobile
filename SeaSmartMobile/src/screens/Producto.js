@@ -5,6 +5,7 @@ import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import ModalCompra from '../components/Modales/ModalCompra';
 import ModalComentario from '../components/Modales/ModalComentario';
+import Back from '../components/Buttons/Back';
 
 export default function Producto({ route, navigation }) {
 
@@ -152,12 +153,17 @@ export default function Producto({ route, navigation }) {
                 data={infoProducto}
                 setEstado={setEstadoComentario}
             />
-            <TouchableOpacity style={{
+            {/* <TouchableOpacity style={{
                 display: 'flex', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width, marginLeft: Dimensions.get('window').width / 20, marginTop: Dimensions.get('window').height / 40, marginBottom: 20, gap: 10
             }} onPress={() => navigation.goBack()}>
                 <Image source={require('../../assets/flecha_regreso.png')} style={{ height: 35, width: 35 }} />
                 <Text style={{ fontSize: 20 }}>Regresar</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
+                <Back 
+                    navigation={navigation}
+                />
+            </View>
             <View style={[styles.container, {}]}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     {/* Información del producto */}

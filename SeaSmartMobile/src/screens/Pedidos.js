@@ -33,7 +33,7 @@ export default function Pedidos({ navigation }) {
   const handleVerDetalles = (id_pedido) => {
     navigation.navigate('DetallePedido', { pedidoId: id_pedido });
   };
-  
+
 
   return (
     <View style={styles.container}>
@@ -51,19 +51,19 @@ export default function Pedidos({ navigation }) {
       </View>
 
       <View style={styles.container}>
-      <ScrollView>
-        {productos.map((pedido, index) => (
-          <PedidoCard
-            key={index}
-            direccion={pedido.direccion}
-            estado_pedido={pedido.estado_pedido}
-            fecha_pedido={pedido.fecha_pedido}
-            precio_total={pedido.precio_total}
-            onPressVerDetalles={handleVerDetalles}
-            id_pedido={pedido.id_pedido}
-          />
-        ))}
-      </ScrollView>
+        <ScrollView style={{ paddingHorizontal: 10 }} contentContainerStyle={{ gap: 20, paddingVertical: 20 }}>
+          {productos.map((pedido, index) => (
+            <PedidoCard
+              key={index}
+              direccion={pedido.direccion}
+              estado_pedido={pedido.estado_pedido}
+              fecha_pedido={pedido.fecha_pedido}
+              precio_total={pedido.precio_total}
+              onPressVerDetalles={handleVerDetalles}
+              id_pedido={pedido.id_pedido}
+            />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
