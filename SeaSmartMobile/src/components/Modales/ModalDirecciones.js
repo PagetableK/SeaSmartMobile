@@ -1,6 +1,6 @@
 import { Text, Modal, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import Buttons from '../Buttons/Buttons';
+import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes';
 
 const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccion, setDireccion, getDirecciones, direccionVieja }) => {
@@ -137,12 +137,9 @@ const ModalDirecciones = ({ setModalVisible, modalVisible, idDireccion, direccio
                     </TextInput>
 
                     {idDireccion == null ? (
-                        <Buttons textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion}>
-                        </Buttons>
+                        <SimpleButton textoBoton={'Agregar dirección'} accionBoton={handleAddDireccion} anchoBoton={'100'}/>
                     ) : (
-                        <TouchableOpacity style={styles.button} onPress={handleUpdateDireccion}>
-                            <Text style={styles.buttonText}>Actualizar dirección</Text>
-                        </TouchableOpacity>
+                        <SimpleButton accionBoton={handleUpdateDireccion} textoBoton={'Actualizar Dirección'} anchoBoton={'100'} colorBoton={'#5CB85C'}/>
                     )}
 
                 </TouchableOpacity>
@@ -172,6 +169,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        width: '90%'
     },
     input: {
         borderColor: '#ccc',
@@ -179,7 +177,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         marginBottom: 20,
-        width: Dimensions.get('window').width / 1.2,
+        width: '100%',
     },
     button: {
         borderWidth: 1,

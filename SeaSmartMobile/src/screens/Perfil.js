@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, TextInput, TouchableOpacity } from 'react-native';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import * as Constantes from '../utils/Constantes';
 
 export default function Perfil({ navigation }) {
@@ -172,18 +172,18 @@ export default function Perfil({ navigation }) {
       </View>
 
       {isEditing ? (
-        <Buttons
-          textoBoton='Guardar cambios'
-          accionBoton={handleSaveChanges}
-        />
+        <SimpleButton
+        textoBoton='Guardar cambios'
+        accionBoton={handleSaveChanges}
+      />
       ) : (
-        <Buttons
-          textoBoton='Editar información'
-          accionBoton={handleEditToggle}
-        />
+        <SimpleButton
+        textoBoton='Editar perfil'
+        accionBoton={handleEditToggle}
+      />
       )}
 
-      <Buttons
+      <SimpleButton
         textoBoton='Cerrar Sesión'
         accionBoton={handleLogout}
       />
