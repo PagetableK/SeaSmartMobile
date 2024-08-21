@@ -5,8 +5,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Inicio from './src/screens/Inicio.js'
 import Login from './src/screens/Login.js'
 import Registro from './src/screens/Registro.js'
-import Productos from './src/screens/Productos.js';
+import Producto from './src/screens/Producto.js';
 import Direcciones from './src/screens/Direcciones.js'
+import VerProductos from './src/screens/VerProductos.js';
 import TabNavigator from './src/navigation/TabNavigator.js';
 import NavStack from './src/navigation/NavStack';
 import DetallesPedido from './src/screens/DetallesPedidos.js';
@@ -52,6 +53,8 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Registro" component={Registro} />
           <Stack.Screen name="Direcciones" component={Direcciones} />
+          <Stack.Screen name="Productos" component={VerProductos} />
+          <Stack.Screen name="Producto" component={Producto} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="DetallePedido" component={DetallesPedido} />
         </Stack.Navigator>) : 

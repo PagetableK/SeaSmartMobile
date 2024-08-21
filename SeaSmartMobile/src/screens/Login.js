@@ -14,44 +14,56 @@ export default function Login({ navigation }) {
   useFocusEffect(
     // La función useCallBack ejecuta el código dentro de ella cada vez que se termina de cargar la pantalla.
     React.useCallback(() => {
-      // Llamada a la función getDetalleCarrito.
-      handleLogOut();
+      // Llamada a la función para validar la sesión del usuario.
+      validarSesion();
     }, [])
   );
 
-  const handleLogOut = async () => {
+  // Función que permite validar la sesión del usuario.
+  const validarSesion = async () => {
     try {
-      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
+      // Se realiza la petición a la API para verificar si el usuario tiene una sesión iniciada.
+      const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=validarSesion`, {
         method: 'GET'
       });
 
+      // Se almacena la respuesta en formato json en la constante.
       const data = await response.json();
 
-      if (data.status) {
-      } else {
+      // Si la respuesta es satisfactoria se ejecuta el código.
+      if(data.status){
+        // Se redirige hacia la pantalla de inicio.
+        navigation.navigate('TabNavigator');
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      Alert.alert('Error', 'Ocurrió un error al iniciar sesión');
     }
   }
 
+  // Función que permite inicar la sesión de un usuario.
   const handlerLogin = async () => {
     try {
+      // Se inicializa la variable donde se almacenarán las credenciales del usuario.
       const formData = new FormData();
+      // Se almacena el correo en la constante.
       formData.append('correo', correo);
+      // Se almacena la contraseña en la constante.
       formData.append('contra', contra);
 
+      // Se realiza la petición a la API.
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logIn`, {
         method: 'POST',
         body: formData
       });
 
+      // Se almacena en la constante la respuesta en formato json.
       const data = await response.json();
 
+      // Si la respuesta es satisfactoria se ejecuta el código.
       if (data.status) {
+        // Se vacían los campos.
         setContra('');
         setCorreo('');
+        // Se redirige hacia la pantalla de inicio.
         navigation.navigate('TabNavigator', { message: 'Inicio de sesión exitoso' });
       } else {
         Alert.alert('Error sesión', data.error);
@@ -62,15 +74,10 @@ export default function Login({ navigation }) {
     }
   };
 
-
+  // Función que permite redirigir al usuario hacia la pantalla de registro.
   const irRegistrar = () => {
     navigation.navigate('Registro');
   };
-
-  useEffect(() => {
-    // validarSesion()
-    // Lógica para validar
-  }, []);
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
-import Buttons from '../Buttons/Buttons';
+import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes';
 
 const ModalEditarCantidad = ({ setModalVisible, modalVisible, idDetallePedido, idDetalleProducto, cantidadProductoCarrito, getDetalleCarrito, nuevaCantidad, setNuevaCantidad, existencias }) => {
@@ -92,9 +92,7 @@ const ModalEditarCantidad = ({ setModalVisible, modalVisible, idDetallePedido, i
             </View>
           </View>
           
-          <Buttons textoBoton={'Actualizar cantidad'} accionBoton={handleUpdateDetalleCarrito}>
-            <Text>Actualizar cantidad</Text>
-          </Buttons>
+          <SimpleButton textoBoton={'Actualizar cantidad'} accionBoton={handleUpdateDetalleCarrito}/>
 
         </TouchableOpacity>
       </TouchableOpacity>

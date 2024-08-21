@@ -8,7 +8,7 @@ import Input from '../components/Inputs/Input';
 import InputEmail from '../components/Inputs/InputEmail';
 import MaskedInputTelefono from '../components/Inputs/MaskedInputTelefono';
 import MaskedInputDui from '../components/Inputs/MaskedInputDui';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 
 export default function SignUp({ navigation }) {
     const ip = Constantes.IP;
@@ -64,7 +64,7 @@ export default function SignUp({ navigation }) {
                 <MaskedInputTelefono telefono={telefono} placeholder="Teléfono móvil" setTelefono={setTelefono} />
                 <Input placeHolder='Contraseña' contra={true} setValor={contra} setTextChange={setContra} />
                 <Input placeHolder='Confirmar contraseña' contra={true} setValor={confirmarContra} setTextChange={setConfirmarContra} />
-                <Buttons textoBoton='Registrar Usuario' accionBoton={handleCreate} />
+                <SimpleButton textoBoton='Registrar Usuario' accionBoton={handleCreate} />
             </ScrollView>
         </View>
     );

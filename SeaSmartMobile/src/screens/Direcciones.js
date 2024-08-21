@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, FlatList, Alert, 
 import { TextInput, Button, Modal } from 'react-native-paper';
 import { useState, useEffect } from 'react';
 import * as Constantes from '../utils/Constantes';
-import Buttons from '../components/Buttons/Buttons';
+import SimpleButton from '../components/Buttons/SimpleButton';
 import DireccionCard from '../components/Cards/DireccionCard';
 import ModalDirecciones from '../components/Modales/ModalDirecciones';
 
@@ -124,10 +124,11 @@ export default function Direcciones({ navigation }) {
             )}
 
             {/* Botón de finalizar pedido */}
-            <View style={{}}>
-                <Buttons
+            <View style={{ width: '80%' }}>
+                <SimpleButton
                     textoBoton='Agregar dirección'
                     accionBoton={handleAgregarDireccion}
+                    anchoBoton={'100'}
                 />
             </View>
 
@@ -142,7 +143,8 @@ const styles = StyleSheet.create({
         flex: 1,
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        paddingVertical: 10
     },
     title: {
         fontSize: 24,
