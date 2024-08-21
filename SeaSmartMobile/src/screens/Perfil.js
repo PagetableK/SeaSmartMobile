@@ -17,7 +17,6 @@ export default function Perfil({ navigation }) {
   // Función que permite cerrar la sesión de un cliente.
   const handleLogout = async () => {
     try {
-      // Se realiza la petición a la API.
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=logOut`, {
         method: 'GET'
       });
@@ -30,28 +29,41 @@ export default function Perfil({ navigation }) {
     } catch (error) {
       Alert.alert('Error', 'Ocurrió un error al cerrar la sesión');
     }
-  }
+  };
 
   // Función que permite obtener la información del cliente por medio de una consulta.
   const getUser = async () => {
     try {
-      // Se realiza la petición a la API y se almacena en la constante.
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=readProfile`, {
         method: 'GET'
       });
-      // Se almacena el conjunto de datos en la constante.
       const data = await response.json();
       
-      // Si la respuesta es satisfactoria se ejecuta el código.
       if (data.status) {
-        const userData = data.dataset; // Aquí se corrige para obtener el dataset
-        setNombre(userData.nombre_cliente);
-        setApellido(userData.apellido_cliente);
-        setCorreo(userData.correo_cliente);
-        setDui(userData.dui_cliente);
-        setTelefono(userData.telefono_movil);
-        setTelefono_Fijo(userData.telefono_fijo);
-        setIdCliente(userData.id_cliente);
+        let nombre = data.dataset.nombre_cliente;
+        let apellido = data.dataset.apellido_cliente;
+
+        // Capitalizar nombres
+        let nombreArray = nombre.split(" ");
+        let nombreCapitalizado = "";
+        for (var i = 0; i < nombreArray.length; i++) {
+          nombreCapitalizado += " " + nombreArray[i].charAt(0).toUpperCase() + nombreArray[i].substring(1);
+        }
+
+        // Capitalizar apellidos
+        let apellidoArray = apellido.split(" ");
+        let apellidoCapitalizado = "";
+        for (var i = 0; i < apellidoArray.length; i++) {
+          apellidoCapitalizado += " " + apellidoArray[i].charAt(0).toUpperCase() + apellidoArray[i].substring(1);
+        }
+
+        setNombre(nombreCapitalizado.trim());
+        setApellido(apellidoCapitalizado.trim());
+        setCorreo(data.dataset.correo_cliente);
+        setDui(data.dataset.dui_cliente);
+        setTelefono(data.dataset.telefono_movil);
+        setTelefono_Fijo(data.dataset.telefono_fijo);
+        setIdCliente(data.dataset.id_cliente);
       } else {
         Alert.alert('Error', data.error);
       }
@@ -61,8 +73,7 @@ export default function Perfil({ navigation }) {
   };
 
   const handleEditToggle = () => {
-    console.log('isEditing:', isEditing);
-    setIsEditing(!isEditing);  // Cambiar a su valor opuesto
+    setIsEditing(!isEditing);
   };
 
   const handleSaveChanges = async () => {
@@ -78,9 +89,8 @@ export default function Perfil({ navigation }) {
       const response = await fetch(`${ip}/SeaSmart/api/services/public/clientes.php?action=editProfile`, {
         method: 'POST',
         body: formData
-        });
+      });
       const data = await response.json();
-      console.log('Estoy en el console luego de que da la respuesta la api ',data);
       if (data.status) {
         Alert.alert('Éxito', 'Perfil actualizado correctamente');
         setIsEditing(false);
@@ -88,14 +98,12 @@ export default function Perfil({ navigation }) {
         Alert.alert('Error', data.error);
       }
     } catch (error) {
-      console.error('Error al actualizar perfil:', error);
       Alert.alert('Error', 'Ocurrió un error al actualizar el perfil, reiniciar');
     }
   };
 
   useEffect(() => {
     getUser();
-    handleEditToggle();
   }, []);
 
   return (
