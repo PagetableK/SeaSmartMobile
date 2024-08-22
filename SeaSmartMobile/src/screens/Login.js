@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Dimensions, Image } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../utils/Constantes';
+import SimpleButton from '../components/Buttons/SimpleButton';
 
 export default function Login({ navigation }) {
 
@@ -37,7 +38,7 @@ export default function Login({ navigation }) {
         setSesion(true);
         // Se redirige hacia la pantalla de inicio.
         navigation.navigate('TabNavigator');
-      } else{
+      } else {
         setSesion(false);
       }
     } catch (error) {
@@ -71,12 +72,12 @@ export default function Login({ navigation }) {
           setCorreo('');
           // Se redirige hacia la pantalla de inicio.
           navigation.navigate('TabNavigator', { message: 'Inicio de sesión exitoso' });
-        } else if(data.error == 'Acción no disponible dentro de la sesión'){
+        } else if (data.error == 'Acción no disponible dentro de la sesión') {
           navigation.navigate('TabNavigator');
         } else {
           Alert.alert('Error de sesión', data.error);
         }
-      } else{
+      } else {
         console.log(sesion);
       }
     } catch (error) {
@@ -90,12 +91,21 @@ export default function Login({ navigation }) {
     navigation.navigate('Registro');
   };
 
+  // Función que permite redirigir al usuario hacia el apartado de recuperación de contraseña.
+  const irRecuperar = () => {
+    navigation.navigate('EnviarCorreoRecovery');
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>Inicia Sesión</Text>
+      <Image
+        source={require('../../assets/icon1.png')}
+      />
+      <Text style={{ fontSize: 25, fontWeight: '600' }}>Inicia Sesión</Text>
+      <Text style={{ fontSize: 20, fontWeight: '600' }}>para poder ingresar</Text>
       <TextInput
         style={styles.input}
-        label="Correo"
+        label="Correo electrónico"
         value={correo}
         onChangeText={setCorreo}
         keyboardType="email-address"
@@ -121,11 +131,20 @@ export default function Login({ navigation }) {
           }
         }}
       />
-      <Button mode="contained" onPress={handlerLogin} style={styles.button}>
-        <Text style={styles.textoBoton}>Iniciar Sesión</Text>
-      </Button>
-      <TouchableOpacity onPress={irRegistrar}>
+      <SimpleButton textoBoton={'Iniciar Sesión'} accionBoton={handlerLogin} />
+
+      <TouchableOpacity onPress={irRegistrar} style={{ marginTop: 40 }}>
         <Text style={styles.textRegistrar}>¿No tienes cuenta? Regístrate aquí</Text>
+      </TouchableOpacity>
+      <View
+        style={{
+          borderBottomColor: 'black',
+          borderBottomWidth: 2,
+          width: Dimensions.get('window').width / 1.5,
+        }}
+      />
+      <TouchableOpacity onPress={irRecuperar}>
+        <Text style={styles.textRegistrar}>Olvidé mi contraseña</Text>
       </TouchableOpacity>
     </View>
   );
@@ -138,11 +157,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 20
-  },
-  texto: {
-    color: '#322C2B',
-    fontWeight: '900',
-    fontSize: 20
   },
   textRegistrar: {
     color: '#322C2B',

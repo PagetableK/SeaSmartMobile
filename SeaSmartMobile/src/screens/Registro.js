@@ -9,6 +9,7 @@ import InputEmail from '../components/Inputs/InputEmail';
 import MaskedInputTelefono from '../components/Inputs/MaskedInputTelefono';
 import MaskedInputDui from '../components/Inputs/MaskedInputDui';
 import SimpleButton from '../components/Buttons/SimpleButton';
+import Back from '../components/Buttons/Back';
 
 export default function SignUp({ navigation }) {
     const ip = Constantes.IP;
@@ -29,8 +30,8 @@ export default function SignUp({ navigation }) {
             formData.append('apellidoCliente', apellido);
             formData.append('correoCliente', correo);
             formData.append('duiCliente', dui);
-            formData.append('telefonoFijo', telefono_fijo); 
-            formData.append('telefonoMovil', telefono); 
+            formData.append('telefonoFijo', telefono_fijo);
+            formData.append('telefonoMovil', telefono);
             formData.append('claveCliente', contra);
             formData.append('confirmarClave', confirmarContra);
 
@@ -53,20 +54,27 @@ export default function SignUp({ navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                <Text style={styles.texto}>Registrar Usuario</Text>
-                <Input placeHolder='Nombre Cliente' setValor={nombre} setTextChange={setNombre} />
-                <Input placeHolder='Apellido Cliente' setValor={apellido} setTextChange={setApellido} />
-                <InputEmail placeHolder='Email Cliente' setValor={correo} setTextChange={setCorreo} />
-                <MaskedInputDui dui={dui} setDui={setDui} />
-                <MaskedInputTelefono telefono={telefono_fijo} placeholder="Teléfono fijo" setTelefono={setTelefono_Fijo} />
-                <MaskedInputTelefono telefono={telefono} placeholder="Teléfono móvil" setTelefono={setTelefono} />
-                <Input placeHolder='Contraseña' contra={true} setValor={contra} setTextChange={setContra} />
-                <Input placeHolder='Confirmar contraseña' contra={true} setValor={confirmarContra} setTextChange={setConfirmarContra} />
-                <SimpleButton textoBoton='Registrar Usuario' accionBoton={handleCreate} />
-            </ScrollView>
-        </View>
+        <>
+            <View style={{ marginTop: 15, marginLeft: 15 }}>
+                <Back
+                    navigation={navigation}
+                />
+            </View>
+            <View style={styles.container}>
+                <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+                    <Text style={styles.texto}>Registrar Usuario</Text>
+                    <Input placeHolder='Nombre Cliente' setValor={nombre} setTextChange={setNombre} />
+                    <Input placeHolder='Apellido Cliente' setValor={apellido} setTextChange={setApellido} />
+                    <InputEmail placeHolder='Email Cliente' setValor={correo} setTextChange={setCorreo} />
+                    <MaskedInputDui dui={dui} setDui={setDui} />
+                    <MaskedInputTelefono telefono={telefono_fijo} placeholder="Teléfono fijo" setTelefono={setTelefono_Fijo} />
+                    <MaskedInputTelefono telefono={telefono} placeholder="Teléfono móvil" setTelefono={setTelefono} />
+                    <Input placeHolder='Contraseña' contra={true} setValor={contra} setTextChange={setContra} />
+                    <Input placeHolder='Confirmar contraseña' contra={true} setValor={confirmarContra} setTextChange={setConfirmarContra} />
+                    <SimpleButton textoBoton='Registrar Usuario' accionBoton={handleCreate} />
+                </ScrollView>
+            </View>
+        </>
     );
 }
 

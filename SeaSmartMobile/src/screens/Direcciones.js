@@ -5,6 +5,7 @@ import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import DireccionCard from '../components/Cards/DireccionCard';
 import ModalDirecciones from '../components/Modales/ModalDirecciones';
+import Back from '../components/Buttons/Back';
 
 export default function Direcciones({ navigation }) {
 
@@ -90,12 +91,11 @@ export default function Direcciones({ navigation }) {
                 direccionVieja={direccionVieja}
             />
 
-            <TouchableOpacity style={{
-                display: 'flex', flexDirection: 'row', alignItems: 'center', width: Dimensions.get('window').width, marginLeft: Dimensions.get('window').width / 20, marginTop: Dimensions.get('window').height / 40, marginBottom: 20, gap: 10
-            }} onPress={() => navigation.goBack()}>
-                <Image source={require('../../assets/flecha_regreso.png')} style={{ height: 35, width: 35 }} />
-                <Text style={{ fontSize: 20 }}>Regresar</Text>
-            </TouchableOpacity>
+            <View style={{ justifyContent: 'flex-start', alignSelf: 'flex-start', marginLeft: 15, marginTop: 15 }}>
+                <Back
+                    navigation={navigation}
+                />
+            </View>
 
             {/* Título de la pantalla */}
             <Text style={styles.title}>Direcciones</Text>

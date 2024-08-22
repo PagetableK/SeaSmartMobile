@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, Alert, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import * as Constantes from '../utils/Constantes';
@@ -25,9 +26,14 @@ export default function Pedidos({ navigation }) {
     }
   };
 
-  useEffect(() => {
-    getPedidos();
-  }, []);
+  // La acción useFocusEffect se ejecuta una vez que la pantalla se ha terminado de cargar (Similar a useEffect).
+  useFocusEffect(
+    // La función useCallBack ejecuta el código dentro de ella cada vez que se termina de cargar la pantalla.
+    React.useCallback(() => {
+      // Se manda a llamar a la función para obtener los pedidos del cliente.
+      getPedidos();
+    }, [])
+  );
 
   const handleVerDetalles = (id_pedido) => {
     navigation.navigate('DetallePedido', { pedidoId: id_pedido });

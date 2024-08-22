@@ -11,6 +11,9 @@ import VerProductos from './src/screens/VerProductos.js';
 import TabNavigator from './src/navigation/TabNavigator.js';
 import NavStack from './src/navigation/NavStack';
 import DetallesPedido from './src/screens/DetallesPedidos.js';
+import EnviarCorreoRecovery from './src/screens/EnviarCorreoRecovery.js';
+import IngresarCodigoRecovery from './src/screens/IngresarCodigoRecovery.js';
+import RestablecerContraRecovery from './src/screens/RestablecerContraRecovery.js';
 
 export default function App() {
 
@@ -57,6 +60,9 @@ export default function App() {
           <Stack.Screen name="Producto" component={Producto} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="DetallePedido" component={DetallesPedido} />
+          <Stack.Screen name="EnviarCorreoRecovery" component={EnviarCorreoRecovery} />
+          <Stack.Screen name="IngresarCodigoRecovery" component={IngresarCodigoRecovery} />
+          <Stack.Screen name="RestablecerContraRecovery" component={RestablecerContraRecovery} />
         </Stack.Navigator>) : 
         // Si la aplicación no está lista, muestra el componente NavStack
         (<NavStack />)}

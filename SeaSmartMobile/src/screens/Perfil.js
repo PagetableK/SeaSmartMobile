@@ -192,6 +192,7 @@ export default function Perfil({ navigation }) {
       <SimpleButton
         textoBoton='Cerrar Sesión'
         accionBoton={handleLogout}
+        colorBoton={'#d9543f'}
       />
     </View>
   );

@@ -26,3 +26,4 @@ Dependencias instaladas:
 * npm i react-native-vector-icons
 * npm i react-native-snap-carousel
 * npm i react-native-web
+* npm install --save @emailjs/react-native

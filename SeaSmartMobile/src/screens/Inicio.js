@@ -62,17 +62,6 @@ export default function Inicio({ navigation }) {
   // Componente principal de renderizado
   return (
     <View style={styles.container}>
-      {/* <ModalCompra
-        visible={modalVisible}
-        cerrarModal={setModalVisible}
-        nombreProductoModal={nombreCategoria}
-        tallaProductoModal={tallaProducto}
-        idDetalleProductoModal={idCategoria}
-        cantidad={cantidadProducto}
-        existencias={existenciaProducto}
-        precioProducto={precioProducto}
-        setCantidad={setCantidadProducto}
-      /> */}
 
       {/* Título de la pantalla */}
 
@@ -106,7 +95,6 @@ export default function Inicio({ navigation }) {
           contentContainerStyle={{ gap: 10, paddingVertical: 5 }}
           renderItem={({ item }) => (
             <View style={{ backgroundColor: '#3E88DE', borderRadius: 15, padding: 20, gap: 10 }}>
-              {/* <Buttons textoBoton={item.nombre_producto + " - " + item.color_producto + " - Talla: " + item.talla} accionBoton={() => abrirAgregar(item.id_detalle_producto, item.nombre_producto + "-" + item.color_producto, item.talla, item.existencia_producto, item.precio_producto)}>Agregar al carrito</Buttons> */}
               <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20, width: Dimensions.get('window').width }}>{item.nombre_categoria}</Text>
               <Image source={{ uri: `${ip}/SeaSmart/api/images/categorias/${item.imagen_categoria}` }} style={{ width: 150, height: 150, alignSelf: 'center', borderRadius: 15 }} />
               <Text style={{ color: 'white', fontSize: 18, fontWeight: 'semibold', }}>{item.descripcion_categoria}</Text>

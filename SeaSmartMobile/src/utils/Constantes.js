@@ -1,1 +1,1 @@
-export const IP = 'https://www.promo2024ds.site';
+export const IP = 'http://192.168.56.1';
