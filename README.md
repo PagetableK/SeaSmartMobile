@@ -32,3 +32,7 @@ Dependencias instaladas:
 * npm i react-native@0.74.5
 * npm i react-native-safe-area-context@4.10.5
 * npm i react-native-screens@3.31.1
+* npm i react-native-gesture-handler@2.16.1
+* npm i @react-native-async-storage/async-storage@1.23.1
+
+LINK DE DESCARGA DE LA APK: 

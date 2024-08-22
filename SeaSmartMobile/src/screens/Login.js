@@ -99,6 +99,7 @@ export default function Login({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
+        style={{ height: 250, width: 250 }}
         source={require('../../assets/icon1.png')}
       />
       <Text style={{ fontSize: 25, fontWeight: '600' }}>Inicia Sesión</Text>
