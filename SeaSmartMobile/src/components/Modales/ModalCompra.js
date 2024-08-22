@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
-import RNPickerSelect from 'react-native-picker-select';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
@@ -25,7 +25,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     // Se remueven los duplicados del array y se almacena el conjunto de datos en la variable.
                     var colores_filtrado = colores.filter(({ color }, index) => !array_colores.includes(color, index + 1));
                     // Se almacena en la constante el conjunto de datos configurado para utilizarlo en el select.
-                    var selectColores = colores_filtrado.map((item) => { return { value: item.id_color, label: item.color, key: item.color } });
+                    var selectColores = colores_filtrado.map((item) => { return { value: item.id_color, label: item.color } });
 
                     // Se almacenan en la variable los nombres de las subcategorías encontradas en los productos.
                     var tallas = data[1].map((item) => { return { talla: item.talla, id_talla: item.id_producto_talla } });
@@ -34,7 +34,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     // Se remueven los duplicados del array y se almacena el conjunto de datos en la variable.
                     var tallas_filtrado = tallas.filter(({ talla }, index) => !array_tallas.includes(talla, index + 1));
                     // Se almacena en la constante el conjunto de datos configurado para utilizarlo en el select.
-                    var selectTallas = tallas_filtrado.map((item) => { return { value: item.id_talla, label: item.talla, key: item.talla } });
+                    var selectTallas = tallas_filtrado.map((item) => { return { value: item.id_talla, label: item.talla } });
 
                     // Se configuran el valor de las constantes.
                     setColoresDetalle(selectColores);
@@ -49,7 +49,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     // Se almacenan dentro de la constante las tallas encontradas en el conjunto de datos.
                     const tallasDetalles = data[1].filter((row) => { return row.talla });
                     // Se almacena en la constante el conjunto de datos configurado para utilizarlo en el select.
-                    const itemsTallas = tallasDetalles.map((item) => { return { value: item.id_producto_talla, label: item.talla, key: item.talla } });
+                    const itemsTallas = tallasDetalles.map((item) => { return { value: item.id_producto_talla, label: item.talla } });
                     // Se establece el valor de la constante.
                     setTallasDetalle(itemsTallas);
                     break;
@@ -57,7 +57,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                     // Se almacenan dentro de la constante los colores encontrados en el conjunto de datos.
                     const coloresDetalles = data[1].filter((row) => { return row.color_producto });
                     // Se almacena en la constante el conjunto de datos configurado para utilizarlo en el select.
-                    const itemsColores = coloresDetalles.map((item) => { return { value: item.id_producto_color, label: item.color_producto, key: item.color_producto } });
+                    const itemsColores = coloresDetalles.map((item) => { return { value: item.id_producto_color, label: item.color_producto } });
                     // Se establece el valor de la constante.
                     setColoresDetalle(itemsColores);
                     break;
@@ -110,7 +110,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         var data_detalle = data[1].filter(({ id_producto_color, id_producto_talla }) =>
                             id_producto_color == color && id_producto_talla == talla
                         );
-                        
+
                         if (data_detalle.length == 0) {
                             error = 1;
                         } else {
@@ -241,14 +241,23 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                             <Text style={{ fontSize: 16, alignSelf: 'flex-start', fontWeight: '600' }}>Opción de talla:</Text>
                                             <View style={{ borderRadius: 20, borderWidth: 1, overflow: 'hidden', borderColor: '#000', width: '100%' }}>
                                                 {
-                                                    <RNPickerSelect
-                                                        placeholder={{
-                                                            label: 'Seleccione una talla',
-                                                            value: null,
-                                                            color: '#000'
+                                                    <Dropdown
+                                                        style={[styles.dropdown]}
+                                                        placeholderStyle={styles.placeholderStyle}
+                                                        selectedTextStyle={styles.selectedTextStyle}
+                                                        inputSearchStyle={styles.inputSearchStyle}
+                                                        iconStyle={styles.iconStyle}
+                                                        data={tallasDetalle}
+                                                        value={talla}
+                                                        placeholder='Seleccione una talla'
+                                                        search
+                                                        maxHeight={300}
+                                                        labelField="label"
+                                                        valueField="value"
+                                                        searchPlaceholder="Buscar una talla..."
+                                                        onChange={item => {
+                                                            setTalla(item.value);
                                                         }}
-                                                        onValueChange={(value) => setTalla(value)}
-                                                        items={tallasDetalle}
                                                     />
                                                 }
                                             </View>
@@ -258,7 +267,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                                 <View style={{ width: '100%', flexDirection: 'row', gap: 30 }}>
                                                     <Text style={{ fontSize: 16, fontWeight: '600' }}>Opción de talla:</Text>
                                                     <Text style={{ color: 'black', fontSize: 18, }}>
-                                                        {tallasDetalle != undefined && tallasDetalle[0] != undefined ? tallasDetalle[0].key : ''}
+                                                        {tallasDetalle != undefined && tallasDetalle[0] != undefined ? tallasDetalle[0].label : ''}
                                                     </Text>
                                                 </View>
                                             </>
@@ -269,14 +278,22 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                         <>
                                             <Text style={{ fontSize: 16, alignSelf: 'flex-start', fontWeight: '600' }}>Opción de color:</Text>
                                             <View style={{ borderRadius: 20, borderWidth: 1, overflow: 'hidden', borderColor: '#000', width: '100%' }}>
-                                                <RNPickerSelect
-                                                    placeholder={{
-                                                        label: 'Seleccione un color',
-                                                        value: null,
-                                                        color: '#000'
+                                                <Dropdown
+                                                    style={[styles.dropdown]}
+                                                    placeholderStyle={styles.placeholderStyle}
+                                                    selectedTextStyle={styles.selectedTextStyle}
+                                                    inputSearchStyle={styles.inputSearchStyle}
+                                                    iconStyle={styles.iconStyle}
+                                                    data={coloresDetalle}
+                                                    search
+                                                    value={color}
+                                                    maxHeight={300}
+                                                    labelField="label"
+                                                    valueField="value"
+                                                    searchPlaceholder="Buscar un color..."
+                                                    onChange={item => {
+                                                        setColor(item.value);
                                                     }}
-                                                    onValueChange={(value) => setColor(value)}
-                                                    items={coloresDetalle}
                                                 />
                                             </View>
                                         </>
@@ -287,7 +304,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                                 <View style={{ width: '100%', flexDirection: 'row', gap: 30 }}>
                                                     <Text style={{ fontSize: 16, fontWeight: '600' }}>Opción de color:</Text>
                                                     <Text style={{ color: 'black', fontSize: 16 }}>
-                                                        {coloresDetalle != undefined && coloresDetalle[0] != undefined ? coloresDetalle[0].key : ''}
+                                                        {coloresDetalle != undefined && coloresDetalle[0] != undefined ? coloresDetalle[0].label : ''}
                                                     </Text>
                                                 </View>
                                             </>
@@ -327,14 +344,22 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                     <Text style={styles.modalText}>{data[0].nombre_producto}</Text>
                                     <Text style={{ fontSize: 16, alignSelf: 'flex-start', fontWeight: '600' }}>Opción de color:</Text>
                                     <View style={{ borderRadius: 20, borderWidth: 1, overflow: 'hidden', borderColor: '#000', width: '100%' }}>
-                                        <RNPickerSelect
-                                            placeholder={{
-                                                label: 'Seleccione un color',
-                                                value: null,
-                                                color: '#000'
+                                        <Dropdown
+                                            style={[styles.dropdown]}
+                                            placeholderStyle={styles.placeholderStyle}
+                                            selectedTextStyle={styles.selectedTextStyle}
+                                            inputSearchStyle={styles.inputSearchStyle}
+                                            iconStyle={styles.iconStyle}
+                                            data={coloresDetalle}
+                                            search
+                                            value={color}
+                                            maxHeight={300}
+                                            labelField="label"
+                                            valueField="value"
+                                            searchPlaceholder="Buscar un color..."
+                                            onChange={item => {
+                                                setColor(item.value);
                                             }}
-                                            onValueChange={(value) => setColor(value)}
-                                            items={coloresDetalle}
                                         />
                                     </View>
                                     <View style={styles.containerCantidad}>
@@ -371,14 +396,23 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                         <Text style={styles.modalText}>{data[0].nombre_producto}</Text>
                                         <Text style={{ fontSize: 16, alignSelf: 'flex-start', fontWeight: '600' }}>Opción de talla:</Text>
                                         <View style={{ borderRadius: 20, borderWidth: 1, overflow: 'hidden', borderColor: '#000', width: '100%' }}>
-                                            <RNPickerSelect
-                                                placeholder={{
-                                                    label: 'Seleccione una talla',
-                                                    value: null,
-                                                    color: '#000'
+                                            <Dropdown
+                                                style={[styles.dropdown]}
+                                                placeholderStyle={styles.placeholderStyle}
+                                                selectedTextStyle={styles.selectedTextStyle}
+                                                inputSearchStyle={styles.inputSearchStyle}
+                                                iconStyle={styles.iconStyle}
+                                                data={tallasDetalle}
+                                                placeholder='Seleccione una talla'
+                                                search
+                                                value={talla}
+                                                maxHeight={300}
+                                                labelField="label"
+                                                valueField="value"
+                                                searchPlaceholder="Buscar una talla..."
+                                                onChange={item => {
+                                                    setTalla(item.value);
                                                 }}
-                                                onValueChange={(value) => setTalla(value)}
-                                                items={tallasDetalle}
                                             />
                                         </View>
                                         <View style={styles.containerCantidad}>
@@ -504,7 +538,40 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         textAlign: 'left',
         fontWeight: '600'
-    }
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
 });
 
 export default ModalCompra;

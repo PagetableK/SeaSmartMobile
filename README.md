@@ -15,7 +15,6 @@ CC BY 4.0 DEED: Cualquier persona es libre de:
 * Sin aplicar restricciones adicionales, no es posible aplicar términos legales o medidas tecnológicas que          restringan legalmente a otros de hacer algo que la licencia permite.
   
 Dependencias instaladas:
-* npm i react-native-picker-select
 * npm i @react-navigation/stack
 * npm i @expo/vector-icons
 * npm i react-native-vector-icons
@@ -34,5 +33,6 @@ Dependencias instaladas:
 * npm i react-native-screens@3.31.1
 * npm i react-native-gesture-handler@2.16.1
 * npm i @react-native-async-storage/async-storage@1.23.1
+* npm i react-native-element-dropdown;
 
 LINK DE DESCARGA DE LA APK: 

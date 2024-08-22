@@ -105,7 +105,7 @@ export default function Carrito({ navigation }) {
 
         // Se almacena la respuesta en la constante en formato JSON.
         const data = await response.json();
-        
+        console.log(data);
         // Si la respuesta es satisfactoria se ejecuta el código.
         if (data.status) {
           // Se restablecen los valores de las constantes.
@@ -119,7 +119,7 @@ export default function Carrito({ navigation }) {
         }
       }
     } catch (error) {
-      console.error(error, "Error desde Catchc");
+      console.error(error, "Error desde catch");
       Alert.alert('Error', 'Ocurrió un error al cargar los productos del carrito');
     }
   };

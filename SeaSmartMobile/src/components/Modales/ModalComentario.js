@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import SimpleButton from '../Buttons/SimpleButton';
 import * as Constantes from '../../utils/Constantes'
-import RNPickerSelect from 'react-native-picker-select';
 import InputMultiline from '../Inputs/InputMultiline';
 
 const ModalComentario = ({ visible, cerrarModal, data, setEstado }) => {

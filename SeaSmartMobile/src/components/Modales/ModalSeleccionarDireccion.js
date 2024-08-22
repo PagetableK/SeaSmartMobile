@@ -2,16 +2,13 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity, FlatList, Alert, 
 import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../../utils/Constantes';
 import SimpleButton from '../Buttons/SimpleButton';
-import RNPickerSelect from 'react-native-picker-select';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { useState } from 'react';
 
 const ModalSeleccionarDireccion = ({ setModalVisible, modalVisible, finalizarPedido, dataDirecciones, setDireccion, direccion }) => {
 
-    // Se declara el objeto con las opciones de placeholder del RNPickerSelect de direcciones.
-    const placeholder = {
-        label: 'Seleccione una dirección',
-        value: null,
-        color: '#000'
-    };
+    const [isFocus, setIsFocus] = useState(false);
 
     return (
         <Modal
@@ -25,12 +22,37 @@ const ModalSeleccionarDireccion = ({ setModalVisible, modalVisible, finalizarPed
             <TouchableOpacity activeOpacity={1} style={styles.centeredView} onPress={() => setModalVisible(!modalVisible)}>
                 <TouchableOpacity activeOpacity={1} style={styles.modalView}>
                     <Text style={{ fontSize: 18, fontWeight: '900' }}>Seleccione una dirección</Text>
-                    <RNPickerSelect
-                    placeholder={placeholder}
-                    onValueChange={(value)=>setDireccion(value)}
-                    items={dataDirecciones.map( (item) => { return {value: item.direccion, label: item.direccion, key: item.direccion} })}
+
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={dataDirecciones.map((item) => { return { value: item.direccion, label: item.direccion } })}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Seleccione una dirección' : '...'}
+                        searchPlaceholder="Buscar una dirección"
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            setDireccion(item.value);
+                            setIsFocus(false);
+                        }}
+                        value={direccion}
+                        renderLeftIcon={() => (
+                            <AntDesign
+                                style={styles.icon}
+                                color={isFocus ? 'blue' : 'black'}
+                                name="home"
+                                size={20}
+                            />
+                        )}
                     />
-                    <SimpleButton textoBoton={'Finalizar pedido'} anchoBoton={'100'} accionBoton={() => finalizarPedido(direccion)}/>
+                    <SimpleButton textoBoton={'Finalizar pedido'} anchoBoton={'100'} accionBoton={() => finalizarPedido(direccion)} />
                 </TouchableOpacity>
             </TouchableOpacity>
         </Modal>
@@ -60,5 +82,40 @@ const styles = StyleSheet.create({
         elevation: 5,
         gap: 15,
         width: '90%',
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        width: '100%',
+        marginVertical: 20
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
     },
 });
