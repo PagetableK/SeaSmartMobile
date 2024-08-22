@@ -55,7 +55,7 @@ export default function SignUp({ navigation }) {
 
     return (
         <>
-            <View style={{ marginTop: 15, marginLeft: 15 }}>
+            <View style={{ marginTop: 15, backgroundColor: '#F7F5F4', marginLeft: 15 }}>
                 <Back
                     navigation={navigation}
                 />
@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7F5F4',
-        paddingTop: Constants.statusBarHeight + 5,
     },
     scrollViewStyle: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingVertical: 20
     },
     texto: {
         color: '#322C2B',

@@ -18,12 +18,17 @@ Dependencias instaladas:
 * npm i react-native-picker-select
 * npm i @react-navigation/stack
 * npm i @expo/vector-icons
+* npm i react-native-vector-icons
 * npm i @react-navigation/bottom-tabs
 * npm i @react-navigation/native
 * npm i @react-navigation/native-stack
 * npm i react-native-masked-text
 * npm install react-native-paper
-* npm i react-native-vector-icons
-* npm i react-native-snap-carousel
-* npm i react-native-web
 * npm install --save @emailjs/react-native
+* npm i react-native-safe-area-context
+* npm i react-native-screens
+* npm i @expo/metro-runtime@3.2.3
+* npm i expo@51.0.28
+* npm i react-native@0.74.5
+* npm i react-native-safe-area-context@4.10.5
+* npm i react-native-screens@3.31.1

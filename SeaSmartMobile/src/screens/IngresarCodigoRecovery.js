@@ -5,7 +5,6 @@ import { TextInput, Button } from 'react-native-paper';
 import * as Constantes from '../utils/Constantes';
 import SimpleButton from '../components/Buttons/SimpleButton';
 import Back from '../components/Buttons/Back';
-import * as EmailJS from '@emailjs/browser';
 
 export default function IngresarCodigoRecovery({ route, navigation }) {
 

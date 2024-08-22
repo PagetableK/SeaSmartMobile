@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "backgroundColor": "#fff",
         "foregroundImage": "./assets/ola.png"
-      }
+      },
+      "package": "com.pagetablek.SeaSmartMobile"
     },
     "web": {
       "favicon": "./assets/icon1.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02e6f924-ecda-4f66-aa9b-9794dc341f17"
+      }
     }
   }
 }
