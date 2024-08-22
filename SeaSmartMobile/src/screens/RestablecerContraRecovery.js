@@ -22,7 +22,7 @@ export default function RestablecerContraRecovery({ route, navigation }) {
             } else {
                 // Se inicializa la constante dónde se almacenará la contraseña nueva y el id del cliente.
                 const formData = new FormData();
-                formData.append('idCliente', route.params.id);
+                formData.append('idCliente', parseInt(parseInt(route.params.id.replace(/[^0-9]/g, ''))));
                 // Se almacenan los valores de los parámetros en la constante.
                 formData.append('contraCliente', contra);
                 formData.append('confirmarContra', confirmarContra);
@@ -34,7 +34,7 @@ export default function RestablecerContraRecovery({ route, navigation }) {
 
                 // Se almacena la respuesta en la constante en formato JSON.
                 const data = await response.json();
-                
+                console.log(parseInt(route.params.id.replace(/[^0-9]/g, '')));
                 // Si la respuesta es satisfactoria se ejecuta el código.
                 if (data.status) {
                     // Se muestra el mensaje y se retorna al inicio de sesión.
