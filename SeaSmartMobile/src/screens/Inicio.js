@@ -225,5 +225,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'right',
     color: '#000',
+    maxWidth: Dimensions.get('window').width / 1.4
   },
 });

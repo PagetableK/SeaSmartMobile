@@ -14,6 +14,12 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
 
     // La función useEffect se ejecuta cada vez que se carga la pantalla.
     useEffect(() => {
+        // Se manda a llamar a la función para establecer el conjunto de datos
+        // que se utilizarán en los selects.
+        configurarSelects();
+    }, [data]);
+
+    const configurarSelects = async () => {
         try {
             // Switch case para verificar información y configurar constantes.
             switch (true) {
@@ -72,7 +78,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             }
         } catch (error) {
         }
-    }, [data]);
+    }
 
     const cambiarCantidad = (operacion) => {
         if (operacion == -1 && cantidad > 1) {
@@ -91,18 +97,21 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             var existencias = 0;
             var idDetalle = 0;
             var error = 0;
+            var advertencia = 0;
             // Switch case para verificar información y configurar variables.
             switch (true) {
                 case data[2] && data[3]:
                     // Se verifica que se haya seleccionado una talla y un color.
                     if (talla == 0) {
                         // Se configura el valor de la variable.
-                        error = 1;
+                        existencias = 1;
+                        advertencia = 1;
                         // Se muestra la advertencia.
                         Alert.alert('Seleccione una talla', 'Asegúrese de seleccionar una talla de la lista de opciones');
                     } else if (color == 0) {
                         // Se configura el valor de la variable.
-                        error = 1;
+                        existencias = 1;
+                        advertencia = 1;
                         // Se muestra la advertencia.
                         Alert.alert('Seleccione un color', 'Asegúrese de seleccionar un color de la lista de opciones');
                     } else {
@@ -133,7 +142,8 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         // Se restablece el valor de la variable.
                         error = 0;
                     } else {
-                        error = 1;
+                        existencias = 1;
+                        advertencia = 1;
                         Alert.alert('Seleccione una talla', 'Asegúrese de seleccionar una talla de la lista de opciones');
                     }
                     break;
@@ -148,7 +158,8 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                         // Se restablece el valor de la variable.
                         error = 0;
                     } else {
-                        error = 1;
+                        existencias = 1;
+                        advertencia = 1;
                         Alert.alert('Seleccione un color', 'Asegúrese de seleccionar un color de la lista de opciones');
                     }
                     break;
@@ -163,8 +174,9 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
             }
 
             if (existencias == 0 || error) {
-                console.log(error);
                 Alert.alert('El producto no se encuentra disponible', 'Lo sentimos mucho');
+            }
+            else if (advertencia == 1) {
             }
             else if (existencias < cantidad && !error) {
                 Alert.alert('La cantidad requerida excede las existencias', 'Seleccione un máximo de ' + existencias + ' existencias.');
@@ -264,10 +276,11 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                         </>
                                         : (
                                             <>
+                                                {tallasDetalle != undefined && tallasDetalle[0] != undefined ? <>{() => setTalla(tallasDetalle[0].value)}</> : <></>}
                                                 <View style={{ width: '100%', flexDirection: 'row', gap: 30 }}>
                                                     <Text style={{ fontSize: 16, fontWeight: '600' }}>Opción de talla:</Text>
                                                     <Text style={{ color: 'black', fontSize: 18, }}>
-                                                        {tallasDetalle != undefined && tallasDetalle[0] != undefined ? tallasDetalle[0].label : ''}
+                                                        {tallasDetalle != undefined && tallasDetalle[0] != undefined ? tallasDetalle[0].label : <></>}
                                                     </Text>
                                                 </View>
                                             </>
@@ -285,6 +298,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                                     inputSearchStyle={styles.inputSearchStyle}
                                                     iconStyle={styles.iconStyle}
                                                     data={coloresDetalle}
+                                                    placeholder='Seleccione un color'
                                                     search
                                                     value={color}
                                                     maxHeight={300}
@@ -300,11 +314,11 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                         :
                                         (
                                             <>
-                                                {coloresDetalle != undefined && coloresDetalle[0] != undefined ? () => setColor(coloresDetalle[0].value) : ''}
+                                                {coloresDetalle != undefined && coloresDetalle[0] != undefined ? <>{() => setColor(coloresDetalle[0].value)}</> : <></>}
                                                 <View style={{ width: '100%', flexDirection: 'row', gap: 30 }}>
                                                     <Text style={{ fontSize: 16, fontWeight: '600' }}>Opción de color:</Text>
                                                     <Text style={{ color: 'black', fontSize: 16 }}>
-                                                        {coloresDetalle != undefined && coloresDetalle[0] != undefined ? coloresDetalle[0].label : ''}
+                                                        {coloresDetalle != undefined && coloresDetalle[0] != undefined ? coloresDetalle[0].label : <></>}
                                                     </Text>
                                                 </View>
                                             </>
@@ -352,6 +366,7 @@ const ModalCompra = ({ visible, cerrarModal, data, cantidad, setCantidad }) => {
                                             iconStyle={styles.iconStyle}
                                             data={coloresDetalle}
                                             search
+                                            placeholder='Seleccione un color'
                                             value={color}
                                             maxHeight={300}
                                             labelField="label"

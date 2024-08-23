@@ -20,6 +20,7 @@ export default function Producto({ route, navigation }) {
     const [talla, setTalla] = useState(false);
     const [comentarios, setComentarios] = useState([]);
     const [estadoComentario, setEstadoComentario] = useState(false);
+    const [contador, setContador] = useState(0);
 
     // La función useEffect se ejecuta cada vez que se carga la pantalla.
     useEffect(() => {
@@ -27,11 +28,14 @@ export default function Producto({ route, navigation }) {
         getInfoProducto();
         // Se manda a llamar a la función para obtener los comentarios del producto.
         getCalificaciones();
-    }, [color, talla]);
+    }, []);
 
     // La función getInfoProducto carga los datos provenientes de la API dentro de la constante infoProducto.
     const getInfoProducto = async () => {
         try {
+            // Se inicializan las variables que permitirán definir los detalles de producto.
+            var colorBoolean = false;
+            var tallaBoolean = false;
             // Se inicializa la constante dónde se almacenará el id del producto.
             const formData = new FormData();
             // Se almacena el id de producto en el form.
@@ -51,9 +55,21 @@ export default function Producto({ route, navigation }) {
                 setInfo(data.dataset);
 
                 // Se verifica si el producto tiene detalles de producto con color asignado.
-                data.dataset.colores > 0 ? setColor(true) : setColor(false);
+                if (data.dataset.colores > 0) {
+                    setColor(true);
+                    colorBoolean = true;
+                } else {
+                    setColor(false);
+                    colorBoolean = false;
+                }
                 // Se verifica si el producto tiene detalles de producto con talla asignada.
-                data.dataset.tallas > 0 ? setTalla(true) : setTalla(false);
+                if (data.dataset.tallas > 0) {
+                    setTalla(true);
+                    tallaBoolean = true;
+                } else {
+                    setTalla(false);
+                    tallaBoolean = false;
+                }
 
                 /*PETICIÓN PARA OBTENER LOS DETALLES DEL PRODUCTO*/
 
@@ -61,16 +77,16 @@ export default function Producto({ route, navigation }) {
                 var url = '';
                 // Switchcase que verifica la opción de fetch a realizar.
                 switch (true) {
-                    case color == true && talla == true:
+                    case colorBoolean == true && tallaBoolean == true:
                         url = `${ip}/SeaSmart/api/services/public/productos.php?action=readDetailProduct`;
                         break;
-                    case color == true && talla == false:
+                    case colorBoolean == true && tallaBoolean == false:
                         url = `${ip}/SeaSmart/api/services/public/productos.php?action=readColorDetailProduct`;
                         break;
-                    case color == false && talla == true:
+                    case colorBoolean == false && tallaBoolean == true:
                         url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSizeDetailProduct`;
                         break;
-                    case color == false && talla == false:
+                    case colorBoolean == false && tallaBoolean == false:
                         url = `${ip}/SeaSmart/api/services/public/productos.php?action=readSingleDetailProduct`;
                         break;
                 }
@@ -160,7 +176,7 @@ export default function Producto({ route, navigation }) {
                 <Text style={{ fontSize: 20 }}>Regresar</Text>
             </TouchableOpacity> */}
             <View style={{ marginLeft: 15, marginTop: 15, marginBottom: 15 }}>
-                <Back 
+                <Back
                     navigation={navigation}
                 />
             </View>
