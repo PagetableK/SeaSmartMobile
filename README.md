@@ -35,4 +35,4 @@ Dependencias instaladas:
 * npm i @react-native-async-storage/async-storage@1.23.1
 * npm i react-native-element-dropdown;
 
-LINK DE DESCARGA DE LA APK: 
+LINK DE DESCARGA DE LA APK: https://expo.dev/accounts/pagetablek/projects/SeaSmartMobile/builds/60737977-0026-4bf1-94d6-4577fb77beb0
